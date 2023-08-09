@@ -1,4 +1,4 @@
-const Joi = require("joi");
+const Joi = require('joi');
 
 const reviewsAddSchema = Joi.object({
   rating: Joi.number().required().min(0).max(5),
@@ -7,10 +7,10 @@ const reviewsAddSchema = Joi.object({
 
 const reviewsUpdateSchema = Joi.object()
   .keys({
-    rating: createReviewSchema.extract("rating"),
-    comment: createReviewSchema.extract("comment"),
+    rating: reviewsAddSchema.extract('rating'),
+    comment: reviewsAddSchema.extract('comment'),
   })
-  .or("rating", "comment", "imgURL")
+  .or('rating', 'comment', 'imgURL')
   .required();
 
 module.exports = { reviewsAddSchema, reviewsUpdateSchema };
