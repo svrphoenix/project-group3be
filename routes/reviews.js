@@ -2,7 +2,7 @@ const express = require("express");
 // const {
 //   reviewsAddSchema,
 //   reviewsUpdateSchema,
-// } = require("../schemas/reviewSchemas");
+// } = require("../helpers/validation/reviewSchemas");
 const router = express.Router();
 
 module.exports = router;
