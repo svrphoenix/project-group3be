@@ -19,7 +19,6 @@ const userSchema = new Schema(
       minlength: 6,
       required: true,
     },
-    refresh_token: String,
   },
   {
     versionKey: false,
