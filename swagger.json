@@ -1,0 +1,41 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.1",
+    "title": "GooseTrack",
+    "description": "Personal to-do list website"
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [
+    {
+      "url": "http://localhost:3001"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    { "name": "Reviews", "description": "Reviews endpoints" },
+    { "name": "Tasks", "description": "Tasks endpoints" }
+  ],
+  "paths": {
+    // "/api/auth/register": {
+    //     get{}
+    // },
+    // "responses":{}
+  },
+  "components": {
+    "schemas": {
+      // наші схеми
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "BearerFormat": "JWT"
+      }
+    }
+  }
+}
