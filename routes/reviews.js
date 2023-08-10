@@ -1,4 +1,8 @@
 const express = require('express');
+
+const isValidId = require('../helpers/validation/isValidateById');
+// const { validateBody } = require('../helpers/validation/validateBody'); //Victoria-Panayoti
+// потрібна ще authenticate
 // const {
 //   reviewsAddSchema,
 //   reviewsUpdateSchema,
@@ -12,12 +16,13 @@ const {
 } = require('../controllers/reviewsController');
 const router = express.Router();
 
-router.route('/').get(getAllReviews).post(addReview);
+router.route('/').get(getAllReviews).post(addReview); //authenticate, validateBody(reviewsAddSchema)
 
+//потрібна authenticate для всіх запиів по id
 router
   .route('/:id')
-  .get(getUserReview)
-  .patch(updateReview)
-  .delete(deleteReview);
+  .get(isValidId, getUserReview)
+  .patch(isValidId, updateReview) //validateBody(reviewsUpdateSchema)
+  .delete(isValidId, deleteReview);
 
 module.exports = router;
