@@ -8,6 +8,15 @@ const getAll = async (req, res, next) => {
 
   const { month, year } = req.body;
 
+  if (
+    !Number(month) ||
+    !Number(year) ||
+    month.length === 0 ||
+    year.length !== 4
+  ) {
+    return next(new HttpError(400, 'Invalid date format'));
+  }
+
   const startOfMonth = new Date(year, month - 1, 2).toISOString();
   const endOfMonth = new Date(year, month, 1).toISOString();
 
