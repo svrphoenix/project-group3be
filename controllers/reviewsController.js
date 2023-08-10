@@ -50,9 +50,19 @@ const updateReview = ctrlWrapper(async (req, res) => {
   res.status(200).json(result);
 });
 
+const deleteReview = ctrlWrapper(async (req, res) => {
+  const { _id: owner } = req.user;
+  const result = await Review.findOneAndDelete({ owner });
+  if (!result) {
+    throw new HttpError(404, 'Not found.🤦‍♀️');
+  }
+  res.status(200).json({ message: 'Review deleted' });
+});
+
 module.exports = {
   getAllReviews,
   getUserReview,
   addReview,
   updateReview,
+  deleteReview,
 };

@@ -8,11 +8,16 @@ const {
   getUserReview,
   addReview,
   updateReview,
+  deleteReview,
 } = require('../controllers/reviewsController');
 const router = express.Router();
 
 router.route('/').get(getAllReviews).post(addReview);
 
-router.route('/:id').get(getUserReview).patch(updateReview);
+router
+  .route('/:id')
+  .get(getUserReview)
+  .patch(updateReview)
+  .delete(deleteReview);
 
 module.exports = router;
