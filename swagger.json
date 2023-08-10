@@ -9,7 +9,7 @@
   "produces": ["application/json"],
   "servers": [
     {
-      "url": "http://localhost:3001"
+      "url": "http://localhost:3003"
     }
   ],
   "tags": [
@@ -20,16 +20,9 @@
     { "name": "Reviews", "description": "Reviews endpoints" },
     { "name": "Tasks", "description": "Tasks endpoints" }
   ],
-  "paths": {
-    // "/api/auth/register": {
-    //     get{}
-    // },
-    // "responses":{}
-  },
+  "paths": {},
   "components": {
-    "schemas": {
-      // наші схеми
-    },
+    "schemas": {},
     "securitySchemes": {
       "Bearer": {
         "type": "http",
