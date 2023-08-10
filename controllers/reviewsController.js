@@ -23,10 +23,24 @@ const getUserReview = ctrlWrapper(async (req, res) => {
   if (!result) {
     throw new HttpError(404, 'Not found.🤷‍♀️');
   }
-  return result;
+  res.status(200).json(result);
+});
+
+const addReview = ctrlWrapper(async (req, res) => {
+  const { _id: owner } = req.user;
+  const id = await Review.findOne({ owner });
+  if (id) {
+    throw new HttpError(
+      409,
+      'You have already left a review, unfortunately you can only leave one review from user😒🤔'
+    );
+  }
+  const newReview = await Review.create({ ...req.body, owner });
+  res.status(201).json(newReview);
 });
 
 module.exports = {
   getAllReviews,
   getUserReview,
+  addReview,
 };
