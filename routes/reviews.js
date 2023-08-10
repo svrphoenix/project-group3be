@@ -7,11 +7,12 @@ const {
   getAllReviews,
   getUserReview,
   addReview,
+  updateReview,
 } = require('../controllers/reviewsController');
 const router = express.Router();
 
 router.route('/').get(getAllReviews).post(addReview);
 
-router.route('/:id').get(getUserReview);
+router.route('/:id').get(getUserReview).patch(updateReview);
 
 module.exports = router;

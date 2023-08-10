@@ -39,8 +39,20 @@ const addReview = ctrlWrapper(async (req, res) => {
   res.status(201).json(newReview);
 });
 
+const updateReview = ctrlWrapper(async (req, res) => {
+  const { _id: owner } = req.user;
+  const result = await Review.findOneAndUpdate({ owner }, req.body, {
+    new: true,
+  }).populate('owner', 'name avatarURL');
+  if (!result) {
+    throw new HttpError(404, 'Not found.🤷‍♀️');
+  }
+  res.status(200).json(result);
+});
+
 module.exports = {
   getAllReviews,
   getUserReview,
   addReview,
+  updateReview,
 };
