@@ -16,14 +16,21 @@ const loginService = async body => {
   const user = await User.findOne({ email: body.email });
   if (!user) {
     throw new HttpError(401, 'Email or password is uncorrect');
-  };
+  }
   const isPasswordCorrect = await bcrypt.compare(body.password, user.password);
   if (!isPasswordCorrect) {
     throw new HttpError(401, 'Email or password is uncorrect');
   }
   const { accessToken, refreshToken } = createTokens(user);
-  const updatedUser = await User.findByIdAndDelete(user._id, { refresh_token: refreshToken },{new:true});
-   return{user:updatedUser,token:accessToken}
+  const updatedUser = await User.findByIdAndDelete(
+    user._id,
+    { refresh_token: refreshToken },
+    { new: true }
+  );
+  return { user: updatedUser, token: accessToken };
+};
+const logoutService = async (req,res) => {
+  await User.findByIdAndUpdate(req.user._id, { refresh_token: null });
 };
 
-module.exports = { registerService,loginService };
+module.exports = { registerService, loginService, logoutService };
