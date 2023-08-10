@@ -22,14 +22,14 @@ const loginService = async body => {
     throw new HttpError(401, 'Email or password is uncorrect');
   }
   const { accessToken, refreshToken } = createTokens(user);
-  const updatedUser = await User.findByIdAndDelete(
+  const updatedUser = await User.findByIdAndUpdate(
     user._id,
     { refresh_token: refreshToken },
     { new: true }
   );
   return { user: updatedUser, token: accessToken };
 };
-const logoutService = async (req,res) => {
+const logoutService = async (req, res) => {
   await User.findByIdAndUpdate(req.user._id, { refresh_token: null });
 };
 
