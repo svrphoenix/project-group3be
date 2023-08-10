@@ -5,9 +5,12 @@ const {
   addTask,
   updateTask,
   removeTask,
-} = require('../controllers/tasks');
+} = require('../controllers/tasksController');
 
-const { addSchema, updateSchema } = require('../helpers/validation/tasks');
+const {
+  addSchema,
+  updateSchema,
+} = require('../helpers/validation/tasksSchemas');
 
 const { validateBody, isValidId } = require('../middlewares'); // authenticate
 
