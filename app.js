@@ -14,6 +14,8 @@ const app = express();
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 
+const { authRouter } = require("./routes/auth");
+
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
@@ -21,6 +23,8 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 app.use('/reviews', reviewsRouter);
 app.use('/tasks', taskRouter);
+
+app.use('/users', authRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: 'Path not found' });
