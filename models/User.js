@@ -21,7 +21,8 @@ const userSchema = new Schema(
     },
     avatarURL: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
     },
     refresh_token: String,
   },
