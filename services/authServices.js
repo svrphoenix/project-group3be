@@ -7,7 +7,7 @@ const { createTokens } = require('../helpers/createTokens');
 const registerService = async body => {
   const user = await User.findOne({ email: body.email });
   if (user) {
-    throw new HttpError(409, 'This user is already exist');
+    throw new HttpError(409, 'This user is already exist');git 
   }
   const hashedPassword = await bcrypt.hash(body.password, 12);
   return await User.create({ ...body, password: hashedPassword });
