@@ -10,7 +10,7 @@ const reviewsUpdateSchema = Joi.object()
     rating: reviewsAddSchema.extract('rating'),
     comment: reviewsAddSchema.extract('comment'),
   })
-  .or('rating', 'comment', 'imgURL')
+  .or('rating', 'comment', 'avatarURL')
   .required();
 
 module.exports = { reviewsAddSchema, reviewsUpdateSchema };
