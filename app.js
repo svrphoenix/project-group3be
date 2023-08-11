@@ -18,7 +18,6 @@ const { authRouter } = require("./routes/auth");
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
-app.use(express.static("public"));
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 app.use("/reviews", reviewsRouter);
