@@ -30,7 +30,7 @@ const auth = async (req, res, next) => {
     try {
       jwt.verify(user.refresh_token, REFRESH_TOKEN_SECRET);
       const { accessToken, refreshToken } = createTokens(user);
-      await User.findByIdAndDelete(
+      await User.findByIdAndUpdate(
         user._id,
         { refresh_token: refreshToken },
         { new: true }
