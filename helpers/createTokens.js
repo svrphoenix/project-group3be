@@ -9,14 +9,16 @@ const {
 
 const createTokens = user => {
   const payload = {
-    id: __dirname,
-    name: user.name,
-    email: user.email,
+    id: user._id,
   };
-    const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_EXPIRES_IN });
-    const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_EXPIRES_IN });
+  const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
+    expiresIn: ACCESS_TOKEN_EXPIRES_IN,
+  });
+  const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET, {
+    expiresIn: REFRESH_TOKEN_EXPIRES_IN,
+  });
 
-    return { accessToken, refreshToken };
+  return { accessToken, refreshToken };
 };
 
-module.exports={createTokens,}
+module.exports = { createTokens };
