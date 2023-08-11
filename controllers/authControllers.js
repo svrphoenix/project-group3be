@@ -1,3 +1,5 @@
+// const HttpError = require('../helpers/HttpError');
+
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 const {
   registerService,
@@ -19,8 +21,17 @@ const login = ctrlWrapper(async (req, res, next) => {
 });
 
 const logout = ctrlWrapper(async (req, res, next) => {
-  await logoutService();
+  await logoutService(req.user);
   res.status(200).json({ message: 'Logout successful' });
 });
 
-module.exports = { register, login, logout };
+// const refresh = async (req, res) => {
+// };
+
+const getCurrent = (req, res) => {
+  const user = req.user;
+  delete user._doc.password;
+  res.json({ user });
+};
+
+module.exports = { register, login, logout, getCurrent };
