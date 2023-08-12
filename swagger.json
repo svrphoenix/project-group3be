@@ -46,6 +46,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       },
@@ -115,7 +118,11 @@
             "type": "string",
             "description": "Error description"
           },
-          "example": "Here is an error description"
+          "example": {
+            "type": "string",
+            "description": "Example error description",
+            "value": "Here is an error description"
+          }
         }
       }
     },
