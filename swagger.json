@@ -317,8 +317,10 @@
         "required": ["rating", "comment"],
         "properties": {
           "rating": {
-            "type": "number",
-            "description": "Review rating"
+            "type": "integer",
+            "description": "Review rating",
+            "minimum": 1,
+            "maximum": 5
           },
           "comment": {
             "type": "string",
@@ -369,6 +371,62 @@
       "UserReview": {
         "type": "object",
         "description": "Get the review of the current user for a product or service",
+        "required": ["comment", "rating"],
+        "properties": {
+          "comment": {
+            "type": "string",
+            "description": "User's comment about the product or service",
+            "maxLength": 300
+          },
+          "rating": {
+            "type": "integer",
+            "description": "User's rating of the product or service",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "owner": {
+            "type": "object",
+            "description": "Information about the user leaving the review",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User's name"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "URL to the user's avatar image"
+              }
+            }
+          }
+        },
+        "example": {
+          "rating": 5,
+          "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
+          "owner": {
+            "name": "Kateryna Hilcher",
+            "avatarURL": "https://example.com/avatar.jpg"
+          }
+        }
+      },
+      "PatchReviewRequest": {
+        "type": "object",
+        "required": ["rating", "comment"],
+        "properties": {
+          "rating": {
+            "type": "integer",
+            "description": "Review rating",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "comment": {
+            "type": "string",
+            "description": "Review comment"
+          }
+        }
+      },
+      "PatchReviewResponses": {
+        "type": "object",
+        "description": "Data structure for changing user review",
         "required": ["comment", "rating"],
         "properties": {
           "comment": {
