@@ -25,6 +25,7 @@
       "get": {
         "tags": ["Reviews"],
         "summary": "Get all reviews of all",
+        "description": "This endpoint retrieves all reviews of products or services.",
         "parameters": [],
         "responses": {
           "200": {
@@ -46,16 +47,66 @@
                 }
               }
             }
-          },
-          "500": {
-            "description": "Server error"
           }
         }
       },
       "post": {
         "tags": ["Reviews"],
-        "summary": "",
-        "parameters": []
+        "summary": "Add review",
+        "description": "This endpoint allows user to add a  review for a product or service.",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddReview"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Review added successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AddReview" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized: Authentication credentials are missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found: The specified resource was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict: The review could not be added due to a conflict with an existing resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -63,31 +114,31 @@
     "schemas": {
       "AllReviews": {
         "type": "array",
-        "description": "All user reviews",
+        "description": "An array containing all user reviews",
         "required": ["comment", "rating"],
         "properties": {
           "comment": {
             "type": "string",
-            "description": "User's comment",
+            "description": "User's comment about the product or service",
             "maxLength": 300
           },
           "rating": {
             "type": "integer",
-            "description": "User's rating",
+            "description": "User's rating of the product or service",
             "minimum": 1,
             "maximum": 5
           },
           "owner": {
             "type": "object",
-            "description": "Information about the user",
+            "description": "Information about the user who left the review",
             "properties": {
               "name": {
                 "type": "string",
-                "description": "User name"
+                "description": "User's name"
               },
               "avatarURL": {
                 "type": "string",
-                "description": "User avatarURL"
+                "description": "URL to the user's avatar image"
               }
             }
           }
@@ -122,6 +173,46 @@
             "type": "string",
             "description": "Example error description",
             "value": "Here is an error description"
+          }
+        }
+      },
+      "AddReview": {
+        "type": "object",
+        "description": "Data structure for adding a new user review",
+        "required": ["comment", "rating"],
+        "properties": {
+          "comment": {
+            "type": "string",
+            "description": "User's comment about the product or service",
+            "maxLength": 300
+          },
+          "rating": {
+            "type": "integer",
+            "description": "User's rating of the product or service",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "owner": {
+            "type": "object",
+            "description": "Information about the user leaving the review",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User's name"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "URL to the user's avatar image"
+              }
+            }
+          }
+        },
+        "example": {
+          "rating": 5,
+          "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
+          "owner": {
+            "name": "Kateryna Hilcher",
+            "avatarURL": "https://example.com/avatar.jpg"
           }
         }
       }
