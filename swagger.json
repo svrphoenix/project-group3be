@@ -108,6 +108,55 @@
           }
         }
       }
+    },
+    "/reviews/{id}": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "Get current user's review",
+        "description": "Get the review of the current user for a product or service",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "User's id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserReview"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized: Authentication credentials are missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Reviews not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorReviews"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -215,13 +264,56 @@
             "avatarURL": "https://example.com/avatar.jpg"
           }
         }
+      },
+      "UserReview": {
+        "type": "object",
+        "description": "Get the review of the current user for a product or service",
+        "required": ["comment", "rating"],
+        "properties": {
+          "comment": {
+            "type": "string",
+            "description": "User's comment about the product or service",
+            "maxLength": 300
+          },
+          "rating": {
+            "type": "integer",
+            "description": "User's rating of the product or service",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "owner": {
+            "type": "object",
+            "description": "Information about the user leaving the review",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User's name"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "URL to the user's avatar image"
+              }
+            }
+          }
+        },
+        "example": {
+          "rating": 5,
+          "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
+          "owner": {
+            "name": "Kateryna Hilcher",
+            "avatarURL": "https://example.com/avatar.jpg"
+          }
+        }
       }
     },
     "securitySchemes": {
       "Bearer": {
         "type": "http",
         "scheme": "bearer",
-        "BearerFormat": "JWT"
+        "BearerFormat": "JWT",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Bearer token to access these API endpoints"
       }
     }
   }
