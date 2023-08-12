@@ -62,17 +62,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AddReview"
+                "$ref": "#/components/schemas/AddReviewRequest"
               }
             }
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Review added successfully",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/AddReview" }
+                "schema": { "$ref": "#/components/schemas/AddReviewResponse" }
               }
             }
           },
@@ -156,7 +156,8 @@
             }
           }
         }
-      }
+      },
+      "patch": { "tags": ["Reviews"] }
     }
   },
   "components": {
@@ -225,7 +226,21 @@
           }
         }
       },
-      "AddReview": {
+      "AddReviewRequest": {
+        "type": "object",
+        "required": ["rating", "comment"],
+        "properties": {
+          "rating": {
+            "type": "number",
+            "description": "Review rating"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Review comment"
+          }
+        }
+      },
+      "AddReviewResponse": {
         "type": "object",
         "description": "Data structure for adding a new user review",
         "required": ["comment", "rating"],
