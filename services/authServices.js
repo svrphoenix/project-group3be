@@ -1,5 +1,7 @@
 const bcrypt = require('bcryptjs');
-// const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = process.env;
+const jwt = require('jsonwebtoken');
+
+const { REFRESH_TOKEN_SECRET } = process.env;
 
 const { User } = require('../models/User');
 const HttpError = require('../helpers/HttpError');
@@ -41,28 +43,25 @@ const logoutService = async user => {
   await User.findByIdAndUpdate(user._id, { refresh_token: null });
 };
 
-// const refreshService = async (token) => {
+const refreshService = async token => {
+  console.log(token);
+  try {
+    const { id } = jwt.verify(token, REFRESH_TOKEN_SECRET);
+    const user = await User.findOne({ _id: id, refresh_token: token });
 
-//   try {
-//     const { id } = jwt.verify(token, ACCESS_TOKEN_SECRET);
+    if (!user) {
+      throw new HttpError(403, 'Invalid token');
+    }
 
-//     const isExist = await User.findOne({ refreshToken: token });
-//     if (!isExist) {
-//       throw new HttpError(403, 'Token invalid');
-//     }
-
-//     const payload = {
-//       id,
-//     };
-
-//     const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
-//       expiresIn: '2m',
-//     });
-//     const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-//       expiresIn: '7d',
-//     });
-//   }
-
-//   ;
-
-module.exports = { registerService, loginService, logoutService };
+    const tokens = createTokens(user);
+    return tokens;
+  } catch (error) {
+    throw new HttpError(403, error.message);
+  }
+};
+module.exports = {
+  registerService,
+  loginService,
+  logoutService,
+  refreshService,
+};
