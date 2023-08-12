@@ -20,9 +20,105 @@
     { "name": "Reviews", "description": "Reviews endpoints" },
     { "name": "Tasks", "description": "Tasks endpoints" }
   ],
-  "paths": {},
+  "paths": {
+    "/reviews": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "Get all reviews of all",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllReviews"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Reviews not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorReviews"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Reviews"],
+        "summary": "",
+        "parameters": []
+      }
+    }
+  },
   "components": {
-    "schemas": {},
+    "schemas": {
+      "AllReviews": {
+        "type": "array",
+        "description": "All user reviews",
+        "required": ["comment", "rating"],
+        "properties": {
+          "comment": {
+            "type": "string",
+            "description": "User's comment",
+            "maxLength": 300
+          },
+          "rating": {
+            "type": "integer",
+            "description": "User's rating",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "owner": {
+            "type": "object",
+            "description": "Information about the user",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User name"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "User avatarURL"
+              }
+            }
+          }
+        },
+        "example": [
+          {
+            "rating": 5,
+            "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
+            "owner": {
+              "name": "Kateryna Hilcher",
+              "avatarURL": "https://example.com/avatar.jpg"
+            }
+          },
+          {
+            "rating": 4,
+            "comment": "A good, visual time planning program.",
+            "owner": {
+              "name": "Volodymyr Shvets",
+              "avatarURL": "https://example.com/avatar.jpg"
+            }
+          }
+        ]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Error description"
+          },
+          "example": "Here is an error description"
+        }
+      }
+    },
     "securitySchemes": {
       "Bearer": {
         "type": "http",
