@@ -7,6 +7,9 @@ const {
   refreshSchema,
   loginValidationSchema,
 } = require('../helpers/validation/authValidationSchema');
+
+const updateUserSchema = require('../helpers/validation/updateUserSchema');
+
 const {
   register,
   login,
@@ -23,6 +26,6 @@ router.post('/logout', auth, logout);
 router.get('/current', auth, getCurrent);
 router.post('/refresh', validateBody(refreshSchema), refresh);
 
-router.patch('/avatars');
+router.patch('/avatars', validateBody(updateUserSchema));
 
 module.exports = { authRouter: router };

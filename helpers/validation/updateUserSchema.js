@@ -1,10 +1,10 @@
 const Joi = require('joi');
-const { emailRegex } = require('./const');
+const { emailRegex, numberRegex, skypeRegex } = require('./const');
 
 const updateUserSchema = Joi.object({
-  name: Joi.string(),
-  phone: Joi.string(),
-  skype: Joi.string(),
+  name: Joi.string().min(3).max(20).required(),
+  phone: Joi.string().pattern(numberRegex),
+  skype: Joi.string().pattern(skypeRegex),
   email: Joi.string().pattern(emailRegex).required(),
 });
 
