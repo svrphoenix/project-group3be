@@ -4,6 +4,7 @@ const {
   loginService,
   logoutService,
   refreshService,
+  updatedUserService,
 } = require('../services/authServices');
 
 const register = ctrlWrapper(async (req, res, next) => {
@@ -37,4 +38,16 @@ const getCurrent = ctrlWrapper((req, res) => {
   res.json({ user });
 });
 
-module.exports = { register, login, logout, getCurrent, refresh };
+const updatedUser = ctrlWrapper(async (req, res) => {
+  await updatedUserService(req.body);
+  res.json({ message: 'update success' });
+});
+
+module.exports = {
+  register,
+  login,
+  logout,
+  getCurrent,
+  refresh,
+  updatedUser,
+};

@@ -30,13 +30,13 @@ const loginService = async body => {
   }
 
   const { accessToken, refreshToken } = createTokens(user);
-  const updatedUser = await User.findByIdAndUpdate(
+  const updatedUserService = await User.findByIdAndUpdate(
     user._id,
     { refresh_token: refreshToken },
     { new: true }
   );
 
-  return { user: updatedUser, token: accessToken };
+  return { user: updatedUserService, token: accessToken };
 };
 
 const logoutService = async user => {
@@ -59,9 +59,15 @@ const refreshService = async token => {
     throw new HttpError(403, error.message);
   }
 };
+
+const updatedUserService = async body => {
+  console.log('try to update');
+};
+
 module.exports = {
   registerService,
   loginService,
   logoutService,
   refreshService,
+  updatedUserService,
 };
