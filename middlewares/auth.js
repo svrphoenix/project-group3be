@@ -8,7 +8,6 @@ const { ACCESS_TOKEN_SECRET } = process.env;
 
 const auth = async (req, _, next) => {
   const { authorization = '' } = req.headers;
-  console.log('authorization', authorization);
   const [type, token] = authorization.split(' ', 2);
 
   if (type !== 'Bearer' || !token) {
