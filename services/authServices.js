@@ -60,17 +60,9 @@ const refreshService = async token => {
   }
 };
 
-const updatedUserService = async (body, user) => {
-  const id = user._id;
-  const { name, email, phone, skype } = body;
-
-  await User.findByIdAndUpdate(id, { name, email, phone, skype });
-};
-
 module.exports = {
   registerService,
   loginService,
   logoutService,
   refreshService,
-  updatedUserService,
 };

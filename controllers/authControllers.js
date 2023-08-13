@@ -4,8 +4,9 @@ const {
   loginService,
   logoutService,
   refreshService,
-  updatedUserService,
 } = require('../services/authServices');
+
+const { User } = require('../models/User');
 
 const register = ctrlWrapper(async (req, res, next) => {
   await registerService(req.body);
@@ -38,10 +39,19 @@ const getCurrent = ctrlWrapper((req, res) => {
   res.json({ user });
 });
 
-const updatedUser = ctrlWrapper(async (req, res) => {
-  await updatedUserService(req.body, req.user);
-  res.json({ message: 'update success' });
-});
+const updatedUser = async (req, res) => {
+  const id = req.user._id;
+  const { name, email, phone, skype } = req.body;
+
+  const user = await User.findByIdAndUpdate(id, {
+    name,
+    email,
+    phone,
+    skype,
+  });
+
+  res.json(user);
+};
 
 module.exports = {
   register,
@@ -49,5 +59,5 @@ module.exports = {
   logout,
   getCurrent,
   refresh,
-  updatedUser,
+  updatedUser: ctrlWrapper(updatedUser),
 };
