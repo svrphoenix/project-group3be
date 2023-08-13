@@ -1,8 +1,8 @@
-const Joi = require("joi");
+const Joi = require('joi');
 
-const {emailRegex, passwordRegex } = require('./const');
+const { emailRegex, passwordRegex } = require('./const');
 
-const loginValidationSchema=Joi.object({
+const loginValidationSchema = Joi.object({
   email: Joi.string().pattern(emailRegex).required(),
   password: Joi.string().pattern(passwordRegex).required().messages({
     'string.pattern.base':
