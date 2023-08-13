@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 
+require('dotenv').config();
+
 const HttpError = require('../helpers/HttpError');
 const { User } = require('../models/User');
 // const createTokens = require('../helpers/createTokens');
@@ -12,7 +14,7 @@ const auth = async (req, res, next) => {
   const [type, token] = authorization.split(' ');
 
   if (type !== 'Bearer' || !token) {
-    return next(new HttpError(401));
+    next(new HttpError(401));
   }
   // const decoded = jwt.decode(token);
   // let user;
@@ -21,7 +23,7 @@ const auth = async (req, res, next) => {
     // user = await User.findById(decoded.id);
     const user = await User.findById(id);
     if (!user || !user.refresh_token) {
-      return next(new HttpError(401));
+      next(new HttpError(401, error.message));
     }
     // jwt.verify(token, ACCESS_TOKEN_SECRET);
     req.user = user;
@@ -40,7 +42,7 @@ const auth = async (req, res, next) => {
     //   );
     //   res.status(200).json({ token: accessToken });
     // } catch (error) {
-    return next(new HttpError(401));
+    next(new HttpError(401, error.message));
   }
   // }
 };

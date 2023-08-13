@@ -60,8 +60,8 @@ const refreshService = async token => {
   }
 };
 
-const updatedUserService = async body => {
-  console.log('try to update');
+const updatedUserService = async (body, user) => {
+  console.log(user);
 };
 
 module.exports = {

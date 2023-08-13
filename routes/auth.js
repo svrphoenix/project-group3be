@@ -27,7 +27,7 @@ router.post('/logout', auth, logout);
 router.get('/current', auth, getCurrent);
 router.post('/refresh', validateBody(refreshSchema), refresh);
 
-router.patch('/user', validateBody(updateUserSchema), updatedUser);
+router.patch('/user', auth, validateBody(updateUserSchema), updatedUser);
 
 router.patch('/avatars');
 

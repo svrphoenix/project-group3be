@@ -39,7 +39,7 @@ const getCurrent = ctrlWrapper((req, res) => {
 });
 
 const updatedUser = ctrlWrapper(async (req, res) => {
-  await updatedUserService(req.body);
+  await updatedUserService(req.body, req.user);
   res.json({ message: 'update success' });
 });
 
