@@ -2,6 +2,7 @@ const express = require('express');
 
 const { auth } = require('../middlewares/auth');
 const validateBody = require('../middlewares/validateBody');
+
 const {
   registerValidationSchema,
   refreshSchema,
@@ -17,7 +18,10 @@ const {
   getCurrent,
   refresh,
   updatedUser,
+  updateAvatar,
 } = require('../controllers/authControllers');
+
+const uploadAvatar = require('../helpers/uploadAvatar');
 
 const router = express.Router();
 
@@ -29,6 +33,6 @@ router.post('/refresh', validateBody(refreshSchema), refresh);
 
 router.patch('/user', auth, validateBody(updateUserSchema), updatedUser);
 
-router.patch('/avatars');
+router.patch('/avatars', auth, uploadAvatar.single('avatar'), updateAvatar);
 
 module.exports = { authRouter: router };
