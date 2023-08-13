@@ -44,7 +44,6 @@ const logoutService = async user => {
 };
 
 const refreshService = async token => {
-  console.log(token);
   try {
     const { id } = jwt.verify(token, REFRESH_TOKEN_SECRET);
     const user = await User.findOne({ _id: id, refresh_token: token });

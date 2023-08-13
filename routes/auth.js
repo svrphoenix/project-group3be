@@ -2,7 +2,6 @@ const express = require('express');
 
 const { auth } = require('../middlewares/auth');
 const validateBody = require('../middlewares/validateBody');
-
 const {
   registerValidationSchema,
   refreshSchema,
