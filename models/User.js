@@ -1,6 +1,12 @@
 const { Schema, model } = require('mongoose');
 
-const emailRegexp = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+const {
+  emailRegex,
+  passwordRegex,
+  phoneRegex,
+  skypeRegex,
+  birthdayRegex,
+} = require('../helpers/validation/const');
 
 const userSchema = new Schema(
   {
@@ -10,12 +16,13 @@ const userSchema = new Schema(
     },
     email: {
       type: String,
-      match: emailRegexp,
+      match: emailRegex,
       required: [true, 'Email is required'],
       unique: true,
     },
     password: {
       type: String,
+      match: passwordRegex,
       minlength: 6,
       required: true,
     },
@@ -23,6 +30,20 @@ const userSchema = new Schema(
       type: String,
       required: false,
       default: '',
+    },
+    phone: {
+      type: String,
+      match: phoneRegex,
+      default: '',
+    },
+    skype: {
+      type: String,
+      match: skypeRegex,
+      default: '',
+    },
+    birthday: {
+      type: String,
+      match: birthdayRegex,
     },
     refresh_token: String,
   },
