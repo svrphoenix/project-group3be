@@ -7,13 +7,20 @@ const {
   refreshSchema,
   loginValidationSchema,
 } = require('../helpers/validation/authValidationSchema');
+
+const updateUserSchema = require('../helpers/validation/updateUserSchema');
+
 const {
   register,
   login,
   logout,
   getCurrent,
   refresh,
+  updatedUser,
+  updateAvatar,
 } = require('../controllers/authControllers');
+
+const uploadAvatar = require('../helpers/uploadAvatar');
 
 const router = express.Router();
 
@@ -23,6 +30,8 @@ router.post('/logout', auth, logout);
 router.get('/current', auth, getCurrent);
 router.post('/refresh', validateBody(refreshSchema), refresh);
 
-router.patch('/avatars');
+router.patch('/user', auth, validateBody(updateUserSchema), updatedUser);
+
+router.patch('/avatars', auth, uploadAvatar.single('avatar'), updateAvatar);
 
 module.exports = { authRouter: router };

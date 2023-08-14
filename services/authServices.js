@@ -58,6 +58,7 @@ const refreshService = async token => {
     throw new HttpError(403, error.message);
   }
 };
+
 module.exports = {
   registerService,
   loginService,

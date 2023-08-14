@@ -1,3 +1,6 @@
+const path = require('path');
+const fs = require('fs/promises');
+
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 const {
   registerService,
@@ -5,6 +8,12 @@ const {
   logoutService,
   refreshService,
 } = require('../services/authServices');
+
+const { User } = require('../models/User');
+
+const avatarsDir = path.join(__dirname, '../', 'public', 'avatars');
+
+// перейменувати після налаштування клаудінарі на process.cwd()
 
 const register = ctrlWrapper(async (req, res, next) => {
   await registerService(req.body);
@@ -37,4 +46,48 @@ const getCurrent = ctrlWrapper((req, res) => {
   res.json({ user });
 });
 
-module.exports = { register, login, logout, getCurrent, refresh };
+const updatedUser = async (req, res) => {
+  const id = req.user._id;
+  const { name, email, phone, skype } = req.body;
+
+  const user = await User.findByIdAndUpdate(id, {
+    name,
+    email,
+    phone,
+    skype,
+  });
+
+  res.json(user);
+};
+
+const updateAvatar = async (req, res) => {
+  const id = req.user._id;
+
+  const { path: tempUpload, originalname } = req.file;
+
+  // await Jimp.read(tempUpload).then(avatar => {
+  //   return avatar.resize(250, 250).write(tempUpload);
+  // });
+
+  const filename = `${id}_${originalname}`;
+
+  const resultUpload = path.join(avatarsDir, filename);
+  await fs.rename(tempUpload, resultUpload);
+
+  const avatarURL = path.join('avatars', filename);
+  await User.findByIdAndUpdate(id, { avatarURL });
+
+  res.json({
+    avatarURL,
+  });
+};
+
+module.exports = {
+  register,
+  login,
+  logout,
+  getCurrent,
+  refresh,
+  updatedUser: ctrlWrapper(updatedUser),
+  updateAvatar: ctrlWrapper(updateAvatar),
+};
