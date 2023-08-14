@@ -4,7 +4,7 @@ const ctrlWrapper = require('../helpers/ctrlWrapper');
 
 // get all per month
 const getAll = async (req, res, next) => {
-  // const { _id: owner } = req.user;
+  const { _id: owner } = req.user;
 
   const { month, year } = req.body;
 
@@ -21,11 +21,9 @@ const getAll = async (req, res, next) => {
   const endOfMonth = new Date(year, month, 1).toISOString();
 
   const result = await Task.find(
-    {
-      date: { $gte: startOfMonth, $lte: endOfMonth },
-    },
+    { owner, date: { $gte: startOfMonth, $lte: endOfMonth } },
     '-createdAt -updatedAt'
-  ); //  owner | .populate("owner", "avatarURL");,
+  ).populate('owner', 'avatarURL');
 
   if (!result) {
     return next(new HttpError(404));
@@ -35,9 +33,9 @@ const getAll = async (req, res, next) => {
 };
 
 const addTask = async (req, res, next) => {
-  // const { _id: owner } = req.user;
+  const { _id: owner } = req.user;
 
-  const result = await Task.create(req.body); // { ...req.body, owner }
+  const result = await Task.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 
@@ -48,7 +46,7 @@ const updateTask = async (req, res, next) => {
   const result = await Task.findByIdAndUpdate(id, req.body, {
     new: true,
   });
-  //  const result = await Task.find({id, owner}, req.body, {
+  // const result = await Task.find({ id, owner }, req.body, {
   //   new: true,
   // }); // заборонити редагування чужих тасок через swagger
 
@@ -63,7 +61,7 @@ const removeTask = async (req, res, next) => {
   const { id } = req.params;
 
   const result = await Task.findByIdAndRemove(id);
-  // const result = await Task.find({id, owner}); // заборонити видалення чужих тасок через swagger
+  // const result = await Task.find({ id, owner }); // заборонити видалення чужих тасок через swagger
 
   if (!result) {
     return next(new HttpError(404));
