@@ -5,11 +5,11 @@
     "title": "GooseTrack",
     "description": "Personal to-do list website"
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json", "multipart/form-data"],
   "servers": [
     {
-      "url": "http://localhost:3003"
+      "url": "https://goose-backend.onrender.com"
     }
   ],
   "tags": [
@@ -21,6 +21,159 @@
     { "name": "Tasks", "description": "Tasks endpoints" }
   ],
   "paths": {
+    "/users/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "New user registration",
+        "description": "This endpoint register new user in database",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllReviews"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or password is incorrect",
+            "content": {}
+          },
+          "409": {
+            "description": "This user is already exist",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "description": "This endpoint login user",
+        "parameters": [],
+        "requestBody": {
+          "description": "Login object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllReviews"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or password is incorrect",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+        "description": "This endpoint logout user",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllReviews"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get current user",
+        "description": "This endpoint gets information about current user",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllReviews"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/refresh": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Refresh tokens",
+        "description": "This endpoint refreshes two security tokens",
+        "parameters": [],
+        "requestBody": {
+          "description": "Tokens object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllReviews"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token error",
+            "content": {}
+          }
+        }
+      }
+    },
     "/reviews": {
       "get": {
         "tags": ["Reviews"],
