@@ -13,6 +13,8 @@ const { User } = require('../models/User');
 
 const avatarsDir = path.join(__dirname, '../', 'public', 'avatars');
 
+// перейменувати після налаштування клаудінарі на process.cwd()
+
 const register = ctrlWrapper(async (req, res, next) => {
   await registerService(req.body);
   const { user, token } = await loginService(req.body);
