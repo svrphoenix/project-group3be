@@ -8,6 +8,8 @@ const {
   birthdayRegex,
 } = require('../helpers/validation/const');
 
+const todayDate = new Date().toISOString().slice(0, 10);
+
 const userSchema = new Schema(
   {
     name: {
@@ -44,6 +46,7 @@ const userSchema = new Schema(
     birthday: {
       type: String,
       match: birthdayRegex,
+      default: todayDate,
     },
     refresh_token: String,
   },
