@@ -30,13 +30,13 @@ const loginService = async body => {
   }
 
   const { accessToken, refreshToken } = createTokens(user);
-  const updatedUserService = await User.findByIdAndUpdate(
+  const updatedUser = await User.findByIdAndUpdate(
     user._id,
     { refresh_token: refreshToken },
     { new: true }
   );
 
-  return { user: updatedUserService, token: accessToken };
+  return { user: updatedUser, token: accessToken };
 };
 
 const logoutService = async user => {
