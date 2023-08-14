@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-require('dotenv').config();
-
 const HttpError = require('../helpers/HttpError');
 const { User } = require('../models/User');
 
@@ -13,7 +11,7 @@ const auth = async (req, _, next) => {
   const [type, token] = authorization.split(' ', 2);
 
   if (type !== 'Bearer' || !token) {
-    next(new HttpError(401));
+    return next(new HttpError(401));
   }
 
   try {
@@ -21,7 +19,7 @@ const auth = async (req, _, next) => {
     const user = await User.findById(id);
 
     if (!user || !user.refresh_token) {
-      next(new HttpError(401, error.message));
+      return next(new HttpError(401, error.message));
     }
     req.user = user;
     next();
