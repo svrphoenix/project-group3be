@@ -12,16 +12,16 @@ const {
   updateSchema,
 } = require('../helpers/validation/tasksSchemas');
 
-const { validateBody, isValidId } = require('../middlewares'); // authenticate
+const { validateBody, isValidId, auth } = require('../middlewares');
 
 const router = express.Router();
 
-router.get('/', getAll); // authenticate
+router.get('/', auth, getAll);
 
-router.post('/', validateBody(addSchema), addTask); // authenticate
+router.post('/', auth, validateBody(addSchema), addTask);
 
-router.patch('/:id', isValidId, validateBody(updateSchema), updateTask); // authenticate
+router.patch('/:id', auth, isValidId, validateBody(updateSchema), updateTask);
 
-router.delete('/:id', isValidId, removeTask); // authenticate
+router.delete('/:id', auth, isValidId, removeTask);
 
 module.exports = router;
