@@ -5,11 +5,11 @@
     "title": "GooseTrack",
     "description": "Personal to-do list website"
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json", "multipart/form-data"],
   "servers": [
     {
-      "url": "http://localhost:3003"
+      "url": "https://goose-backend.onrender.com"
     }
   ],
   "tags": [
@@ -21,6 +21,201 @@
     { "name": "Tasks", "description": "Tasks endpoints" }
   ],
   "paths": {
+    "/users/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "New user registration",
+        "description": "This endpoint register new user in database",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or password is incorrect",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Login401error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "This user is already exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Registration409error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "description": "This endpoint login user",
+        "parameters": [],
+        "requestBody": {
+          "description": "Login object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or password is incorrect",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Login401error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+        "description": "This endpoint logout user",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogoutResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid token or user not found)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Auth401error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get current user",
+        "description": "This endpoint gets information about current user",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid token or user not found)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Auth401error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/refresh": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Refresh tokens",
+        "description": "This endpoint refreshes two security tokens",
+        "parameters": [],
+        "requestBody": {
+          "description": "Tokens object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokensRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokensResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Refresh403error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/reviews": {
       "get": {
         "tags": ["Reviews"],
@@ -292,6 +487,172 @@
   },
   "components": {
     "schemas": {
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "test2@i.ua"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "123456Qw"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User's id in database (type ObjectId)",
+                "example": "64d5eb99a3ed01b542412a5f"
+              },
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": "Joi"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar URL",
+                "example": "https://vrt.com/upload/avatar.jpg"
+              },
+              "refresh_token": {
+                "type": "string",
+                "description": "Refresh token",
+                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDVlYjk5YTNlZDAxYjU0MjQxMmE1ZiIsImlhdCI6MTY5MjAxMDg4NywiZXhwIjoxNjk0NjAyODg3fQ.6y6K88bc38--1DYZN79FgvUyw4kMnFEhczicJymkguc"
+              }
+            }
+          },
+          "token": {
+            "type": "string",
+            "description": "Access token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDVlYjk5YTNlZDAxYjU0MjQxMmE1ZiIsImlhdCI6MTY5MjAxMDg4NywiZXhwIjoxNjk0NjAyODg3fQ.6y6K88bc38--1DYZN79FgvUyw4kMnFEhczicJymkguc"
+          }
+        }
+      },
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["name", "email", "password"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Joi"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "test2@i.ua"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "123456Qw"
+          }
+        }
+      },
+      "TokensRequest": {
+        "type": "object",
+        "required": ["refresh_token"],
+        "properties": {
+          "refresh_token": {
+            "type": "string",
+            "description": "Access token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDVlYjk5YTNlZDAxYjU0MjQxMmE1ZiIsImlhdCI6MTY5MjAxMDg4NywiZXhwIjoxNjk0NjAyODg3fQ.6y6K88bc38--1DYZN79FgvUyw4kMnFEhczicJymkguc"
+          }
+        }
+      },
+      "TokensResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Access token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDVlYjk5YTNlZDAxYjU0MjQxMmE1ZiIsImlhdCI6MTY5MjAxMDg4NywiZXhwIjoxNjk0NjAyODg3fQ.6y6K88bc38--1DYZN79FgvUyw4kMnFEhczicJymkguc"
+          },
+          "refresh_token": {
+            "type": "string",
+            "description": "Refresh token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDVlYjk5YTNlZDAxYjU0MjQxMmE1ZiIsImlhdCI6MTY5MjAxMDg4NywiZXhwIjoxNjk0NjAyODg3fQ.6y6K88bc38--1DYZN79FgvUyw4kMnFEhczicJymkguc"
+          }
+        }
+      },
+      "LogoutResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Logout successful"
+          }
+        }
+      },
+      "Login401error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Email or password is incorrect"
+          },
+          "status": {
+            "type": "integer",
+            "example": 401
+          }
+        }
+      },
+      "Registration409error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "This user is already exist"
+          },
+          "status": {
+            "type": "integer",
+            "example": 409
+          }
+        }
+      },
+      "Refresh403error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Invalid token"
+          },
+          "status": {
+            "type": "integer",
+            "example": 403
+          }
+        }
+      },
+      "Auth401error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Unauthorized"
+          },
+          "status": {
+            "type": "integer",
+            "example": 401
+          }
+        }
+      },
       "AllReviews": {
         "type": "array",
         "description": "An array containing all user reviews",
