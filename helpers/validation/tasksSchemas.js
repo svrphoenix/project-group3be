@@ -1,8 +1,5 @@
 const Joi = require('joi');
-
-const timeRegexp = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
-const dateRegexp =
-  /^(202[3-9]|20[3-9]\d|2[1-9]\d{2}|[3-9]\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+const { timeRegexp, dateRegexp } = require('./const');
 
 const addSchema = Joi.object({
   title: Joi.string().max(250).required().messages({
@@ -43,18 +40,18 @@ const updateSchema = Joi.object({
   }),
   start: Joi.string().pattern(timeRegexp).messages({
     'string.pattern.base':
-      "Field 'start' should be in hh:mm format and not exceed 23:59",
+      "Field 'start' must be in hh:mm format and not exceed 23:59",
   }),
   end: Joi.string().pattern(timeRegexp).messages({
     'string.pattern.base':
-      "Field 'start' should be in hh:mm format and not exceed 23:59",
+      "Field 'end' must be in hh:mm format and not exceed 23:59",
   }),
   priority: Joi.string().valid('low', 'medium', 'high').messages({
     'any.only': 'Priority must be one of: low, medium or high',
   }),
   date: Joi.string().pattern(dateRegexp).messages({
     'string.pattern.base':
-      "Field 'date' should be in yyyy.mm.dd format and start from 2023",
+      "Field 'date' must be in yyyy.mm.dd format and start from 2023",
   }),
   category: Joi.string().valid('to-do', 'in-progress', 'done').messages({
     'any.only': 'Category must be one of: to-do, in-progress or done',
@@ -64,19 +61,5 @@ const updateSchema = Joi.object({
   .messages({
     'object.min': 'Missing fields. At least one field should be present',
   });
-
-// const updateSchema = Joi.object()
-//   .keys({
-//     title: addSchema.extract('title'),
-//     start: addSchema.extract('start'),
-//     end: addSchema.extract('end'),
-//     priority: addSchema.extract('priority'),
-//     date: addSchema.extract('date'),
-//     category: addSchema.extract('category'),
-//   })
-//   .min(1)
-//   .messages({
-//     'any.required': 'Missing fields',
-//   });
 
 module.exports = { addSchema, updateSchema };

@@ -1,11 +1,20 @@
 const { Schema, model } = require('mongoose');
 const mongooseErrorHandler = require('../helpers/mongooseErrorHandler');
+const { timeRegexp, dateRegexp } = require('../helpers/validation/const');
 
 const taskSchema = new Schema(
   {
     title: { type: String, required: [true, 'Enter a task title'] },
-    start: { type: String, required: [true, 'Enter the task start time'] },
-    end: { type: String, required: [true, 'Enter the task end time'] },
+    start: {
+      type: String,
+      required: [true, 'Enter the task start time'],
+      match: timeRegexp,
+    },
+    end: {
+      type: String,
+      required: [true, 'Enter the task end time'],
+      match: timeRegexp,
+    },
     priority: {
       type: String,
       enum: ['low', 'medium', 'high'],
@@ -14,6 +23,7 @@ const taskSchema = new Schema(
     date: {
       type: String,
       required: [true, 'Add a date for the task'],
+      match: dateRegexp,
     },
     category: {
       type: String,
