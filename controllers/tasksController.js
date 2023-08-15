@@ -6,7 +6,7 @@ const ctrlWrapper = require('../helpers/ctrlWrapper');
 const getAll = async (req, res, next) => {
   const { _id: owner } = req.user;
 
-  const { month, year } = req.body;
+  const { month, year } = req.query;
 
   if (
     !Number(month) ||

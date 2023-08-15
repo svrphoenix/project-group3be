@@ -538,21 +538,30 @@
       "get": {
         "tags": ["Tasks"],
         "summary": "Get all tasks for a month for an authorized user",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "description": "Two digits of the month",
+            "schema": {
+              "type": "string",
+              "example": "09"
+            },
+            "required": true
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "description": "Four digits of the year",
+            "schema": {
+              "type": "string",
+              "example": "2023"
+            },
+            "required": true
+          }
+        ],
 
         "security": [{ "Bearer": [] }],
-
-        "requestBody": {
-          "description": "This endpoint is designed for retrieving information about all user tasks for the selected month. If there are tasks for the selected month, an array of objects is returned in the response. If there are no tasks, an empty array is returned in the response. Access to this endpoint requires authentication, so the authorization token must be included in the request header.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AllTasksForMonthRequest"
-              }
-            }
-          }
-        },
 
         "responses": {
           "200": {
@@ -652,7 +661,9 @@
             "in": "path",
             "name": "id",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "description": "Task's id"
           }
         ],
@@ -711,7 +722,9 @@
             "in": "path",
             "name": "id",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "description": "Task's id"
           }
         ],
@@ -1291,22 +1304,6 @@
           "message": {
             "type": "string",
             "example": "Not Found"
-          }
-        }
-      },
-      "AllTasksForMonthRequest": {
-        "type": "object",
-        "required": ["month", "year"],
-        "properties": {
-          "month": {
-            "type": "string",
-            "description": "Two digits of the month",
-            "example": "09"
-          },
-          "year": {
-            "type": "string",
-            "description": "Four digits of the year",
-            "example": "2023"
           }
         }
       },
