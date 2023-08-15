@@ -14,10 +14,13 @@ const getAllReviews = ctrlWrapper(async (req, res) => {
 });
 
 const getUserReview = ctrlWrapper(async (req, res) => {
-  const { _id: owner } = req.user;
+  const owner = req.user?._id;
+  if (!owner) {
+    throw new HttpError(400, 'Missing owner');
+  }
   const result = await Review.find({ owner }).populate(
     'owner',
-    'name avatarURL'
+    '_id name avatarURL'
   );
   if (!result) {
     throw new HttpError(404, 'Not found.🤷‍♀️');
@@ -26,20 +29,39 @@ const getUserReview = ctrlWrapper(async (req, res) => {
 });
 
 const addReview = ctrlWrapper(async (req, res) => {
-  const { _id: owner } = req.user;
-  const id = await Review.findOne({ owner });
-  if (id) {
+  const body = req.body;
+  const owner = req.user?._id;
+
+  if (!owner) {
+    throw new HttpError(400, 'Missing owner');
+  }
+
+  if (!body) {
+    throw new HttpError(400, 'Missing body of request');
+  }
+  const existReview = await Review.findOne({ owner });
+  if (existReview) {
     throw new HttpError(
       409,
       'You have already left a review, unfortunately you can only leave one review from user😒🤔'
     );
   }
   const newReview = await Review.create({ ...req.body, owner });
+  if (!newReview) {
+    throw new HttpError(500, 'Failed to create a review');
+  }
   res.status(201).json(newReview);
 });
 
 const updateReview = ctrlWrapper(async (req, res) => {
-  const { _id: owner } = req.user;
+  const owner = req.user?._id;
+  if (!owner) {
+    throw new HttpError(400, 'Missing owner');
+  }
+
+  if (!req.body) {
+    throw new HttpError(400, 'Missing body of request');
+  }
   const result = await Review.findOneAndUpdate({ owner }, req.body, {
     new: true,
   }).populate('owner', 'name avatarURL');
@@ -50,7 +72,10 @@ const updateReview = ctrlWrapper(async (req, res) => {
 });
 
 const deleteReview = ctrlWrapper(async (req, res) => {
-  const { _id: owner } = req.user;
+  const owner = req.user?._id;
+  if (!owner) {
+    throw new HttpError(400, 'Missing owner');
+  }
   const result = await Review.findOneAndDelete({ owner });
   if (!result) {
     throw new HttpError(404, 'Not found.🤦‍♀️');
