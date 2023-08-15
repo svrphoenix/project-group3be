@@ -2,7 +2,7 @@ const { Task } = require('../models/task');
 const HttpError = require('../helpers/HttpError');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 
-// get all per month
+// get all for month
 const getAll = async (req, res, next) => {
   const { _id: owner } = req.user;
 
@@ -11,8 +11,10 @@ const getAll = async (req, res, next) => {
   if (
     !Number(month) ||
     !Number(year) ||
-    month.length === 0 ||
-    year.length !== 4
+    month.length !== 2 ||
+    year.length !== 4 ||
+    parseInt(month) < 1 ||
+    parseInt(month) > 12
   ) {
     return next(new HttpError(400, 'Invalid date format'));
   }
@@ -40,15 +42,11 @@ const addTask = async (req, res, next) => {
 };
 
 const updateTask = async (req, res, next) => {
-  // const { _id: owner } = req.user;
   const { id } = req.params;
 
   const result = await Task.findByIdAndUpdate(id, req.body, {
     new: true,
   });
-  // const result = await Task.find({ id, owner }, req.body, {
-  //   new: true,
-  // }); // заборонити редагування чужих тасок через swagger
 
   if (!result) {
     return next(new HttpError(404));
@@ -57,11 +55,9 @@ const updateTask = async (req, res, next) => {
 };
 
 const removeTask = async (req, res, next) => {
-  // const { _id: owner } = req.user;
   const { id } = req.params;
 
   const result = await Task.findByIdAndRemove(id);
-  // const result = await Task.find({ id, owner }); // заборонити видалення чужих тасок через swagger
 
   if (!result) {
     return next(new HttpError(404));
