@@ -16,8 +16,7 @@ const {
   logout,
   getCurrent,
   refresh,
-  updatedUser,
-  updateAvatar,
+  updateUser,
 } = require('../controllers/authControllers');
 
 const uploadAvatar = require('../helpers/uploadAvatar');
@@ -30,8 +29,12 @@ router.post('/logout', auth, logout);
 router.get('/current', auth, getCurrent);
 router.post('/refresh', validateBody(refreshSchema), refresh);
 
-router.patch('/user', auth, validateBody(updateUserSchema), updatedUser);
-
-router.patch('/avatars', auth, uploadAvatar.single('avatar'), updateAvatar);
+router.patch(
+  '/user',
+  auth,
+  uploadAvatar.single('avatar'),
+  validateBody(updateUserSchema),
+  updateUser
+);
 
 module.exports = { authRouter: router };

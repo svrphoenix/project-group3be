@@ -46,23 +46,11 @@ const getCurrent = ctrlWrapper((req, res) => {
   res.json({ user });
 });
 
-const updatedUser = async (req, res) => {
+const updateUser = async (req, res) => {
   const id = req.user._id;
   const { name, email, phone, skype, birthday } = req.body;
 
-  const user = await User.findByIdAndUpdate(id, {
-    name,
-    email,
-    phone,
-    skype,
-    birthday,
-  });
-
-  res.json(user);
-};
-
-const updateAvatar = async (req, res) => {
-  const id = req.user._id;
+  console.log(req.body);
 
   const { path: tempUpload, originalname } = req.file;
 
@@ -78,9 +66,16 @@ const updateAvatar = async (req, res) => {
   const avatarURL = path.join('avatars', filename);
   await User.findByIdAndUpdate(id, { avatarURL });
 
-  res.json({
+  const user = await User.findByIdAndUpdate(id, {
+    name,
+    email,
+    phone,
+    skype,
+    birthday,
     avatarURL,
   });
+
+  res.json(user);
 };
 
 module.exports = {
@@ -89,6 +84,5 @@ module.exports = {
   logout,
   getCurrent,
   refresh,
-  updatedUser: ctrlWrapper(updatedUser),
-  updateAvatar: ctrlWrapper(updateAvatar),
+  updateUser: ctrlWrapper(updateUser),
 };
