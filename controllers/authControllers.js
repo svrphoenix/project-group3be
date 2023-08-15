@@ -48,13 +48,14 @@ const getCurrent = ctrlWrapper((req, res) => {
 
 const updatedUser = async (req, res) => {
   const id = req.user._id;
-  const { name, email, phone, skype } = req.body;
+  const { name, email, phone, skype, birthday } = req.body;
 
   const user = await User.findByIdAndUpdate(id, {
     name,
     email,
     phone,
     skype,
+    birthday,
   });
 
   res.json(user);
