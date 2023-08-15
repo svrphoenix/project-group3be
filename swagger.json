@@ -224,10 +224,10 @@
         "security": [{ "Bearer": [] }],
         "parameters": [],
         "requestBody": {
-          "description": "Updating object",
+          "description": "Updating object with form-data",
           "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/UpdateingRequest"
               }
@@ -241,56 +241,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UpdatingResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Updating400error" }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized: Authentication credentials are missing or invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Auth401error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/avatars": {
-      "patch": {
-        "tags": ["Auth"],
-        "summary": "Updating user's avatar",
-        "description": "This endpoint updates user's auatarURL in database",
-        "security": [{ "Bearer": [] }],
-        "parameters": [],
-        "requestBody": {
-          "description": "Form-data",
-          "required": true,
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateingAvatarRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UpdateingAvatarResponse"
                 }
               }
             }
@@ -933,6 +883,12 @@
             "format": "email",
             "example": "test2@i.ua"
           },
+          "avatar": {
+            "type": "string",
+            "format": "binary",
+            "description": "User's avatar",
+            "example": "beautiful_picture.png"
+          },
           "phone": {
             "type": "string",
             "description": "User's phone number",
@@ -972,6 +928,11 @@
                 "format": "email",
                 "example": "test2@i.ua"
               },
+              "avatar": {
+                "type": "string",
+                "description": "User's avatar file name",
+                "example": "avatars\\64d8d42de77a75cf6008418a_beautiful_picture.png"
+              },
               "phone": {
                 "type": "string",
                 "description": "User's phone number",
@@ -1003,29 +964,6 @@
             "type": "string",
             "description": "Access token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDVlYjk5YTNlZDAxYjU0MjQxMmE1ZiIsImlhdCI6MTY5MjAxMDg4NywiZXhwIjoxNjk0NjAyODg3fQ.6y6K88bc38--1DYZN79FgvUyw4kMnFEhczicJymkguc"
-          }
-        }
-      },
-      "UpdateingAvatarRequest": {
-        "type": "object",
-        "required": ["name", "email", "password"],
-        "properties": {
-          "avatar": {
-            "type": "string",
-            "format": "binary",
-            "description": "User's avatar",
-            "example": "beautiful_picture.png"
-          }
-        }
-      },
-      "UpdateingAvatarResponse": {
-        "type": "object",
-        "required": ["name", "email", "password"],
-        "properties": {
-          "avatarURL": {
-            "type": "string",
-            "description": "User's avatar file name",
-            "example": "avatars\\64d8d42de77a75cf6008418a_beautiful_picture.png"
           }
         }
       },
