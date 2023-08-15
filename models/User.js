@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const {
   emailRegex,
-  passwordRegex,
+  // passwordRegex,
   phoneRegex,
   skypeRegex,
   birthdayRegex,
@@ -24,8 +24,6 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      match: passwordRegex,
-      minlength: 6,
       required: true,
     },
     avatarURL: {

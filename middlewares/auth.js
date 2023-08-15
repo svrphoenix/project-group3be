@@ -19,7 +19,7 @@ const auth = async (req, _, next) => {
     const user = await User.findById(id);
 
     if (!user || !user.refresh_token) {
-      return next(new HttpError(401, error.message));
+      return next(new HttpError(401));
     }
     req.user = user;
     next();
