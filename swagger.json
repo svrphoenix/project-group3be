@@ -1374,10 +1374,13 @@
         "type": "object",
         "allOf": [
           {
-            "_id": {
-              "type": "string",
-              "description": "Task's id in database (type ObjectId)",
-              "example": "64d5eb99a3ed01b542412a78"
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Task's id in database (type ObjectId)",
+                "example": "64d5eb99a3ed01b542412a78"
+              }
             }
           },
           {
