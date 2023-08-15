@@ -870,7 +870,7 @@
       },
       "UpdatingRequest": {
         "type": "object",
-        "required": ["name", "email", "password"],
+        "required": ["name", "email"],
         "properties": {
           "name": {
             "type": "string",
