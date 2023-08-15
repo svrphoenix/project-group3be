@@ -229,7 +229,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateingRequest"
+                "$ref": "#/components/schemas/UpdatingRequest"
               }
             }
           }
@@ -868,14 +868,14 @@
           }
         }
       },
-      "UpdateingRequest": {
+      "UpdatingRequest": {
         "type": "object",
         "required": ["name", "email", "password"],
         "properties": {
           "name": {
             "type": "string",
             "description": "User's name",
-            "example": "Joi"
+            "example": "JoiUpdated"
           },
           "email": {
             "type": "string",
