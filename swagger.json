@@ -10,7 +10,8 @@
   "servers": [
     {
       "url": "https://goose-backend.onrender.com"
-    }
+    },
+    { "url": "http://localhost:3003" }
   ],
   "tags": [
     {
@@ -378,7 +379,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorReviews"
+                  "$ref": "#/components/schemas/Error404Response"
                 }
               }
             }
@@ -427,7 +428,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error400Response"
                 }
               }
             }
@@ -437,7 +438,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error401Response"
                 }
               }
             }
@@ -447,7 +448,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorReviews"
+                  "$ref": "#/components/schemas/Error404Response"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server Error: the server encountered an unexpected condition that prevented it from fulfilling the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500Response"
                 }
               }
             }
@@ -495,7 +506,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error401Response"
                 }
               }
             }
@@ -505,7 +516,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error404Response"
                 }
               }
             }
@@ -515,7 +526,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error409Response"
                 }
               }
             }
@@ -582,7 +593,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error401Response"
                 }
               }
             }
@@ -592,7 +603,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorReviews"
+                  "$ref": "#/components/schemas/Error404Response"
                 }
               }
             }
@@ -636,7 +647,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error401Response"
                 }
               }
             }
@@ -646,7 +657,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error404Response"
                 }
               }
             }
@@ -1262,17 +1273,12 @@
           }
         ]
       },
-      "ErrorResponse": {
+      "Error409Response": {
         "type": "object",
         "properties": {
           "message": {
             "type": "string",
-            "description": "Error description"
-          },
-          "example": {
-            "type": "string",
-            "description": "Example error description",
-            "value": "Here is an error description"
+            "example": "The user already has everything, it is not possible to add anything additional"
           }
         }
       },
@@ -1307,29 +1313,11 @@
             "description": "User's rating of the product or service",
             "minimum": 1,
             "maximum": 5
-          },
-          "owner": {
-            "type": "object",
-            "description": "Information about the user leaving the review",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User's name"
-              },
-              "avatarURL": {
-                "type": "string",
-                "description": "URL to the user's avatar image"
-              }
-            }
           }
         },
         "example": {
           "rating": 5,
-          "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
-          "owner": {
-            "name": "Kateryna Hilcher",
-            "avatarURL": "https://example.com/avatar.jpg"
-          }
+          "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!"
         }
       },
       "UserReview": {
@@ -1347,29 +1335,11 @@
             "description": "User's rating of the product or service",
             "minimum": 1,
             "maximum": 5
-          },
-          "owner": {
-            "type": "object",
-            "description": "Information about the user leaving the review",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User's name"
-              },
-              "avatarURL": {
-                "type": "string",
-                "description": "URL to the user's avatar image"
-              }
-            }
           }
         },
         "example": {
           "rating": 5,
-          "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
-          "owner": {
-            "name": "Kateryna Hilcher",
-            "avatarURL": "https://example.com/avatar.jpg"
-          }
+          "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!"
         }
       },
       "PatchReviewRequest": {
@@ -1403,29 +1373,11 @@
             "description": "User's rating of the product or service",
             "minimum": 1,
             "maximum": 5
-          },
-          "owner": {
-            "type": "object",
-            "description": "Information about the user leaving the review",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User's name"
-              },
-              "avatarURL": {
-                "type": "string",
-                "description": "URL to the user's avatar image"
-              }
-            }
           }
         },
         "example": {
           "rating": 5,
-          "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
-          "owner": {
-            "name": "Kateryna Hilcher",
-            "avatarURL": "https://example.com/avatar.jpg"
-          }
+          "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!"
         }
       },
       "BaseTask": {
