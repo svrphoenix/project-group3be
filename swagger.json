@@ -1153,7 +1153,7 @@
             "description": "User's date of birth",
             "example": "2000-02-20"
           },
-          "avatar": {
+          "avatarURL": {
             "type": "string",
             "description": "User's avatar file name",
             "example": "http://res.cloudinary.com/dixcrd38z/image/upload/v1692198776/uukgeljzzqsoqguemzsk.png"
