@@ -1,7 +1,7 @@
 const HttpError = require('../helpers/HttpError');
 
 const validateBody = schema => {
-  return (req, res, next) => {
+  return (req, _, next) => {
     const { error } = schema.validate(req.body);
 
     if (error) {
