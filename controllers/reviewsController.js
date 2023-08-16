@@ -15,9 +15,9 @@ const getAllReviews = ctrlWrapper(async (req, res) => {
 
 const getUserReview = ctrlWrapper(async (req, res) => {
   const owner = req.user?._id;
-  if (!owner) {
-    throw new HttpError(400, 'Missing owner');
-  }
+  // if (!owner) {
+  //   throw new HttpError(400, 'Missing owner');
+  // }
   const result = await Review.find({ owner }).populate(
     'owner',
     '_id name avatarURL'
@@ -32,9 +32,9 @@ const addReview = ctrlWrapper(async (req, res) => {
   const body = req.body;
   const owner = req.user?._id;
 
-  if (!owner) {
-    throw new HttpError(400, 'Missing owner');
-  }
+  // if (!owner) {
+  //   throw new HttpError(400, 'Missing owner');
+  // }
 
   if (!body) {
     throw new HttpError(400, 'Missing body of request');
@@ -55,13 +55,13 @@ const addReview = ctrlWrapper(async (req, res) => {
 
 const updateReview = ctrlWrapper(async (req, res) => {
   const owner = req.user?._id;
-  if (!owner) {
-    throw new HttpError(400, 'Missing owner');
-  }
+  // if (!owner) {
+  //   throw new HttpError(400, 'Missing owner');
+  // }
 
-  if (!req.body) {
-    throw new HttpError(400, 'Missing body of request');
-  }
+  // if (!req.body) {
+  //   throw new HttpError(400, 'Missing body of request');
+  // }
   const result = await Review.findOneAndUpdate({ owner }, req.body, {
     new: true,
   }).populate('owner', 'name avatarURL');
@@ -73,9 +73,9 @@ const updateReview = ctrlWrapper(async (req, res) => {
 
 const deleteReview = ctrlWrapper(async (req, res) => {
   const owner = req.user?._id;
-  if (!owner) {
-    throw new HttpError(400, 'Missing owner');
-  }
+  // if (!owner) {
+  //   throw new HttpError(400, 'Missing owner');
+  // }
   const result = await Review.findOneAndDelete({ owner });
   if (!result) {
     throw new HttpError(404, 'Not found.🤦‍♀️');
