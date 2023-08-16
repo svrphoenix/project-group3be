@@ -403,15 +403,7 @@
         "summary": "Get current user's review",
         "description": "Get the review of the current user for a product or service",
         "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "type": "string",
-            "description": "User's id"
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -547,15 +539,7 @@
         "tags": ["Reviews"],
         "summary": "Update review by user's id",
         "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "user's id"
-          }
-        ],
+        "parameters": [],
         "requestBody": {
           "description": "Review's object",
           "required": true,
@@ -624,15 +608,7 @@
         "tags": ["Reviews"],
         "summary": "Delete review",
         "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "type": "string",
-            "description": "User's id"
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Successful operation",
