@@ -1141,7 +1141,7 @@
           "avatar": {
             "type": "string",
             "description": "User's avatar file name",
-            "example": "avatars\\64d8d42de77a75cf6008418a_beautiful_picture.png"
+            "example": "http://res.cloudinary.com/dixcrd38z/image/upload/v1692198776/uukgeljzzqsoqguemzsk.png"
           },
           "phone": {
             "type": "string",
