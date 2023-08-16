@@ -311,6 +311,9 @@
             "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/UpdatingRequest"
+              },
+              "encoding": {
+                "avatar": { "contentType": "image/png, image/jpeg" }
               }
             }
           }
@@ -1115,11 +1118,6 @@
             "format": "email",
             "example": "test2@i.ua"
           },
-          "avatar": {
-            "type": "string",
-            "description": "User's avatar file name",
-            "example": "avatars\\64d8d42de77a75cf6008418a_beautiful_picture.png"
-          },
           "phone": {
             "type": "string",
             "description": "User's phone number",
@@ -1137,8 +1135,8 @@
           },
           "avatarURL": {
             "type": "string",
-            "description": "User's avatar URL",
-            "example": "https://vrt.com/upload/avatar.jpg"
+            "description": "User's avatar file name",
+            "example": "http://res.cloudinary.com/dixcrd38z/image/upload/v1692198776/uukgeljzzqsoqguemzsk.png"
           },
           "refresh_token": {
             "type": "string",
