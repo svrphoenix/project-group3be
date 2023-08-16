@@ -1,6 +1,3 @@
-const path = require('path');
-const fs = require('fs/promises');
-
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 const {
   registerService,
@@ -10,10 +7,6 @@ const {
 } = require('../services/authServices');
 
 const { User } = require('../models/User');
-
-const avatarsDir = path.join(__dirname, '../', 'public', 'avatars');
-
-// перейменувати після налаштування клаудінарі на process.cwd()
 
 const register = ctrlWrapper(async (req, res, next) => {
   await registerService(req.body);
