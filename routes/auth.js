@@ -19,7 +19,7 @@ const {
   updateUser,
 } = require('../controllers/authControllers');
 
-const uploadAvatar = require('../helpers/uploadAvatar');
+const uploadAvatar = require('../middlewares/uploadAvatar');
 
 const router = express.Router();
 
@@ -32,7 +32,7 @@ router.post('/refresh', validateBody(refreshSchema), refresh);
 router.patch(
   '/user',
   auth,
-  uploadAvatar.single('avatar'),
+  uploadAvatar,
   validateBody(updateUserSchema),
   updateUser
 );
