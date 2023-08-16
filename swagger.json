@@ -10,7 +10,8 @@
   "servers": [
     {
       "url": "https://goose-backend.onrender.com"
-    }
+    },
+    { "url": "http://localhost:3003" }
   ],
   "tags": [
     {
@@ -381,7 +382,68 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorReviews"
+                  "$ref": "#/components/schemas/Error404Response"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server Error: the server encountered an unexpected condition that prevented it from fulfilling the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reviews/own": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "Get current user's review",
+        "description": "Get the review of the current user for a product or service",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserReview"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error400Response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized: Authentication credentials are missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error401Response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Reviews not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error404Response"
                 }
               }
             }
@@ -439,7 +501,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error401Response"
                 }
               }
             }
@@ -449,7 +511,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error404Response"
                 }
               }
             }
@@ -459,76 +521,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server Error: the server encountered an unexpected condition that prevented it from fulfilling the request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error500Response"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/reviews/{id}": {
-      "get": {
-        "tags": ["Reviews"],
-        "summary": "Get current user's review",
-        "description": "Get the review of the current user for a product or service",
-        "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "type": "string",
-            "description": "User's id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserReview"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error400Response"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized: Authentication credentials are missing or invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Reviews not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorReviews"
+                  "$ref": "#/components/schemas/Error409Response"
                 }
               }
             }
@@ -549,15 +542,7 @@
         "tags": ["Reviews"],
         "summary": "Update review by user's id",
         "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "user's id"
-          }
-        ],
+        "parameters": [],
         "requestBody": {
           "description": "Review's object",
           "required": true,
@@ -595,7 +580,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error401Response"
                 }
               }
             }
@@ -605,7 +590,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorReviews"
+                  "$ref": "#/components/schemas/Error404Response"
                 }
               }
             }
@@ -626,15 +611,7 @@
         "tags": ["Reviews"],
         "summary": "Delete review",
         "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "type": "string",
-            "description": "User's id"
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -649,7 +626,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error401Response"
                 }
               }
             }
@@ -659,7 +636,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error404Response"
                 }
               }
             }
@@ -1270,17 +1247,12 @@
           }
         ]
       },
-      "ErrorResponse": {
+      "Error409Response": {
         "type": "object",
         "properties": {
           "message": {
             "type": "string",
-            "description": "Error description"
-          },
-          "example": {
-            "type": "string",
-            "description": "Example error description",
-            "value": "Here is an error description"
+            "example": "The user already has everything, it is not possible to add anything additional"
           }
         }
       },
@@ -1315,29 +1287,11 @@
             "description": "User's rating of the product or service",
             "minimum": 1,
             "maximum": 5
-          },
-          "owner": {
-            "type": "object",
-            "description": "Information about the user leaving the review",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User's name"
-              },
-              "avatarURL": {
-                "type": "string",
-                "description": "URL to the user's avatar image"
-              }
-            }
           }
         },
         "example": {
           "rating": 5,
-          "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
-          "owner": {
-            "name": "Kateryna Hilcher",
-            "avatarURL": "https://example.com/avatar.jpg"
-          }
+          "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!"
         }
       },
       "UserReview": {
@@ -1355,29 +1309,11 @@
             "description": "User's rating of the product or service",
             "minimum": 1,
             "maximum": 5
-          },
-          "owner": {
-            "type": "object",
-            "description": "Information about the user leaving the review",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User's name"
-              },
-              "avatarURL": {
-                "type": "string",
-                "description": "URL to the user's avatar image"
-              }
-            }
           }
         },
         "example": {
           "rating": 5,
-          "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
-          "owner": {
-            "name": "Kateryna Hilcher",
-            "avatarURL": "https://example.com/avatar.jpg"
-          }
+          "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!"
         }
       },
       "PatchReviewRequest": {
@@ -1411,29 +1347,11 @@
             "description": "User's rating of the product or service",
             "minimum": 1,
             "maximum": 5
-          },
-          "owner": {
-            "type": "object",
-            "description": "Information about the user leaving the review",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User's name"
-              },
-              "avatarURL": {
-                "type": "string",
-                "description": "URL to the user's avatar image"
-              }
-            }
           }
         },
         "example": {
           "rating": 5,
-          "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
-          "owner": {
-            "name": "Kateryna Hilcher",
-            "avatarURL": "https://example.com/avatar.jpg"
-          }
+          "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!"
         }
       },
       "BaseTask": {

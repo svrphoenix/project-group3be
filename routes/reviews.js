@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { validateBody, isValidId, auth } = require('../middlewares');
+const { validateBody, auth } = require('../middlewares');
 
 const {
   reviewsAddSchema,
@@ -15,15 +15,13 @@ const {
 } = require('../controllers/reviewsController');
 const router = express.Router();
 
-router
-  .route('/')
-  .get(getAllReviews)
-  .post(auth, validateBody(reviewsAddSchema), addReview);
+router.route('/').get(getAllReviews);
 
 router
-  .route('/:id')
-  .get(auth, isValidId, getUserReview)
-  .patch(auth, isValidId, validateBody(reviewsUpdateSchema), updateReview)
-  .delete(auth, isValidId, deleteReview);
+  .route('/own')
+  .get(auth, getUserReview)
+  .post(auth, validateBody(reviewsAddSchema), addReview)
+  .patch(auth, validateBody(reviewsUpdateSchema), updateReview)
+  .delete(auth, deleteReview);
 
 module.exports = router;
