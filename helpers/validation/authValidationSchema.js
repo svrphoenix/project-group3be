@@ -11,16 +11,13 @@ const registerValidationSchema = Joi.object({
   }),
 });
 
-const loginValidationSchema = Joi.object({
-  email: Joi.string().pattern(emailRegex).required(),
-  password: Joi.string().pattern(passwordRegex).required().messages({
-    'string.pattern.base':
-      'This password should contain  at least eight characters and at least one number and one letter',
-  }),
+const loginValidationSchema = Joi.object().keys({
+  email: registerValidationSchema.extract('email'),
+  password: registerValidationSchema.extract('password'),
 });
 
 const refreshSchema = Joi.object({
-  refresh_token: Joi.string().required(),
+  refresh_token: Joi.string().allow(null),
 });
 
 module.exports = {
