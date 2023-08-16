@@ -48,23 +48,7 @@ const getCurrent = ctrlWrapper((req, res) => {
 
 const updateUser = async (req, res) => {
   const id = req.user._id;
-  const { name, email, phone, skype, birthday } = req.body;
-
-  console.log(req.body);
-
-  const { path: tempUpload, originalname } = req.file;
-
-  // await Jimp.read(tempUpload).then(avatar => {
-  //   return avatar.resize(250, 250).write(tempUpload);
-  // });
-
-  const filename = `${id}_${originalname}`;
-
-  const resultUpload = path.join(avatarsDir, filename);
-  await fs.rename(tempUpload, resultUpload);
-
-  const avatarURL = path.join('avatars', filename);
-  await User.findByIdAndUpdate(id, { avatarURL });
+  const { name, email, phone, skype, birthday, avatarURL } = req.body;
 
   const user = await User.findByIdAndUpdate(id, {
     name,
