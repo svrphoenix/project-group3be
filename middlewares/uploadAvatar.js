@@ -27,7 +27,6 @@ const uploadAvatar = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.log(error);
     res.send({
       message: error.message,
     });
