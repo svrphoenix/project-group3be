@@ -43,6 +43,10 @@ const updateUser = async (req, res) => {
   const id = req.user._id;
 
   const userFromDB = await User.findById(id);
+
+  if (req.body.avatarURL === '') {
+    req.body.avatarURL = userFromDB.avatarURL;
+  }
   const user = { ...userFromDB._doc, ...req.body };
 
   await User.findByIdAndUpdate(id, user);
