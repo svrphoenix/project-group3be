@@ -75,7 +75,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error409Response"
+                  "$ref": "#/components/schemas/Error409RegistrationResponse"
                 }
               }
             }
@@ -496,22 +496,12 @@
               }
             }
           },
-          "404": {
-            "description": "Not Found: The specified resource was not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error404Response"
-                }
-              }
-            }
-          },
           "409": {
             "description": "Conflict: The review could not be added due to a conflict with an existing resource",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error409Response"
+                  "$ref": "#/components/schemas/Error409ReviewsResponse"
                 }
               }
             }
@@ -1145,6 +1135,11 @@
             "description": "User's avatar file name",
             "example": "http://res.cloudinary.com/dixcrd38z/image/upload/v1692198776/uukgeljzzqsoqguemzsk.png"
           },
+          "createdAt": {
+            "type": "string",
+            "description": "Date of user profile creating",
+            "example": "2023-08-11T08:04:41.035Z"
+          },
           "refresh_token": {
             "type": "string",
             "description": "Refresh token",
@@ -1508,12 +1503,25 @@
           }
         }
       },
-      "Error409Response": {
+      "Error409RegistrationResponse": {
         "type": "object",
         "properties": {
           "message": {
             "type": "string",
             "example": "This user is already exist"
+          },
+          "status": {
+            "type": "integer",
+            "example": 409
+          }
+        }
+      },
+      "Error409ReviewsResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "User review already exist"
           },
           "status": {
             "type": "integer",
