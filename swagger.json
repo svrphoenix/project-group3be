@@ -438,16 +438,6 @@
               }
             }
           },
-          "404": {
-            "description": "Reviews not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error404Response"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Internal server Error: the server encountered an unexpected condition that prevented it from fulfilling the request",
             "content": {
