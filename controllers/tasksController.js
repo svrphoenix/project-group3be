@@ -43,8 +43,9 @@ const addTask = async (req, res, next) => {
 
 const updateTask = async (req, res, next) => {
   const { id } = req.params;
+  const { _id: owner } = req.user;
 
-  const result = await Task.findByIdAndUpdate(id, req.body, {
+  const result = await Task.findOneAndUpdate({ _id: id, owner }, req.body, {
     new: true,
   });
 
@@ -56,8 +57,9 @@ const updateTask = async (req, res, next) => {
 
 const removeTask = async (req, res, next) => {
   const { id } = req.params;
+  const { _id: owner } = req.user;
 
-  const result = await Task.findByIdAndRemove(id);
+  const result = await Task.findOneAndRemove({ _id: id, owner });
 
   if (!result) {
     return next(new HttpError(404));
