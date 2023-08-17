@@ -12,11 +12,11 @@ const getAllReviews = ctrlWrapper(async (req, res) => {
 const getUserReview = ctrlWrapper(async (req, res) => {
   const { _id } = req.user;
   const result = await Review.findOne({ owner: _id });
-  if (!result) {
-    throw new HttpError(404, 'Not found.🤷‍♀️');
-  }
-  const { rating, comment } = result;
-  res.status(200).json({ rating, comment });
+  const response = result
+    ? { rating: result.rating, comment: result.comment }
+    : { rating: null, comment: null };
+
+  res.status(200).json(response);
 });
 
 const addReview = ctrlWrapper(async (req, res) => {
@@ -34,20 +34,19 @@ const updateReview = ctrlWrapper(async (req, res) => {
   const result = await Review.findOneAndUpdate({ owner }, req.body, {
     new: true,
   });
-  if (!result) {
-    throw new HttpError(404, 'Not found.🤷‍♀️');
-  }
-  const { rating, comment } = result;
-  res.status(200).json({ rating, comment });
+  const response = result
+    ? { rating: result.rating, comment: result.comment }
+    : { rating: null, comment: null };
+
+  res.status(200).json(response);
 });
 
 const deleteReview = ctrlWrapper(async (req, res) => {
   const { _id: owner } = req.user;
   const result = await Review.findOneAndDelete({ owner });
-  if (!result) {
-    throw new HttpError(404, 'Not found.🤦‍♀️');
-  }
-  res.status(200).json({ message: 'Review deleted' });
+  const message = result ? 'Review deleted' : 'Review not found';
+
+  res.status(200).json({ message });
 });
 
 module.exports = {
