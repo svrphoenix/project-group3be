@@ -14,7 +14,7 @@ const getUserReview = ctrlWrapper(async (req, res) => {
   const result = await Review.findOne({ owner: _id });
   const response = result
     ? { rating: result.rating, comment: result.comment }
-    : { rating: null, comment: null };
+    : {};
 
   res.status(200).json(response);
 });
@@ -36,7 +36,7 @@ const updateReview = ctrlWrapper(async (req, res) => {
   });
   const response = result
     ? { rating: result.rating, comment: result.comment }
-    : { rating: null, comment: null };
+    : {};
 
   res.status(200).json(response);
 });
