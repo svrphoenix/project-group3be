@@ -22,11 +22,11 @@ const loginService = async body => {
   const user = await User.findOne({ email: body.email });
 
   if (!user) {
-    throw new HttpError(401, 'Email or password is uncorrect');
+    throw new HttpError(401, 'Email or password is incorrect');
   }
   const isPasswordCorrect = await bcrypt.compare(body.password, user.password);
   if (!isPasswordCorrect) {
-    throw new HttpError(401, 'Email or password is uncorrect');
+    throw new HttpError(401, 'Email or password is incorrect');
   }
 
   const { accessToken, refreshToken } = createTokens(user);

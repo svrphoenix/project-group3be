@@ -45,17 +45,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "$ref": "#/components/schemas/RegistrationResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid date format",
+            "description": "Bad request (invalid request body)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AllTasksError400Response"
+                  "$ref": "#/components/schemas/Error400Response"
                 }
               }
             }
@@ -65,7 +65,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Login401error"
+                  "$ref": "#/components/schemas/Error401LoginResponse"
                 }
               }
             }
@@ -75,7 +75,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Registration409error"
+                  "$ref": "#/components/schemas/Error409Response"
                 }
               }
             }
@@ -122,11 +122,11 @@
             }
           },
           "400": {
-            "description": "Invalid date format",
+            "description": "Bad request (invalid request body)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AllTasksError400Response"
+                  "$ref": "#/components/schemas/Error400Response"
                 }
               }
             }
@@ -136,7 +136,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Login401error"
+                  "$ref": "#/components/schemas/Error401LoginResponse"
                 }
               }
             }
@@ -173,11 +173,11 @@
             }
           },
           "401": {
-            "description": "Unauthorized (invalid token or user not found)",
+            "description": "Unauthorized: Authentication credentials are missing or invalid",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Auth401error"
+                  "$ref": "#/components/schemas/Error401Response"
                 }
               }
             }
@@ -214,11 +214,11 @@
             }
           },
           "401": {
-            "description": "Unauthorized (invalid token or user not found)",
+            "description": "Unauthorized: Authentication credentials are missing or invalid",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Auth401error"
+                  "$ref": "#/components/schemas/Error401Response"
                 }
               }
             }
@@ -265,11 +265,11 @@
             }
           },
           "400": {
-            "description": "Invalid date format",
+            "description": "Bad request (invalid request body)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AllTasksError400Response"
+                  "$ref": "#/components/schemas/Error400Response"
                 }
               }
             }
@@ -279,7 +279,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Refresh403error"
+                  "$ref": "#/components/schemas/Error403Response"
                 }
               }
             }
@@ -342,7 +342,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Auth401error"
+                  "$ref": "#/components/schemas/Error401Response"
                 }
               }
             }
@@ -702,7 +702,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AllTasksError400Response"
+                  "$ref": "#/components/schemas/Error400AllTasksResponse"
                 }
               }
             }
@@ -774,7 +774,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AllTasksError400Response"
+                  "$ref": "#/components/schemas/Error400AllTasksResponse"
                 }
               }
             }
@@ -817,9 +817,7 @@
             "description": "Task's id"
           }
         ],
-
         "security": [{ "Bearer": [] }],
-
         "requestBody": {
           "description": "This endpoint is intended for updating any fields of user tasks. The task search is conducted by its id in the query string. If the task update is successful, the updated task object is returned in the response. Access to this endpoint requires authentication, so the authorization token must be included in the request header.",
           "required": true,
@@ -847,7 +845,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AllTasksError400Response"
+                  "$ref": "#/components/schemas/Error400AllTasksResponse"
                 }
               }
             }
@@ -987,44 +985,63 @@
               },
               "avatarURL": {
                 "type": "string",
-                "description": "User's avatar URL",
-                "example": "https://vrt.com/upload/avatar.jpg"
+                "description": "User's avatar file name",
+                "example": "http://res.cloudinary.com/dixcrd38z/image/upload/v1692198776/uukgeljzzqsoqguemzsk.png"
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "Date of user profile creating",
+                "example": "2023-08-11T08:04:41.035Z"
               },
               "refresh_token": {
                 "type": "string",
                 "description": "Refresh token",
                 "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDVlYjk5YTNlZDAxYjU0MjQxMmE1ZiIsImlhdCI6MTY5MjAxMDg4NywiZXhwIjoxNjk0NjAyODg3fQ.6y6K88bc38--1DYZN79FgvUyw4kMnFEhczicJymkguc"
+              },
+              "birthday": {
+                "type": "string",
+                "description": "User's date of birth",
+                "example": "2000-02-20"
+              },
+              "phone": {
+                "type": "string",
+                "description": "User's phone number",
+                "example": "38 (000) 123 45 67"
+              },
+              "skype": {
+                "type": "string",
+                "description": "User's skype number",
+                "example": "38 (000) 123 45 67"
               }
             }
           },
           "token": {
             "type": "string",
             "description": "Access token",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDVlYjk5YTNlZDAxYjU0MjQxMmE1ZiIsImlhdCI6MTY5MjAxMDg4NywiZXhwIjoxNjk0NjAyODg3fQ.6y6K88bc38--1DYZN79FgvUyw4kMnFEhczicJymkguc"
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
           }
         }
       },
       "RegistrationRequest": {
-        "type": "object",
-        "required": ["name", "email", "password"],
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "User's name",
-            "example": "Joi"
+        "allOf": [
+          {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": "Joi"
+              }
+            }
           },
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email",
-            "example": "test2@i.ua"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "123456Qw"
+          {
+            "$ref": "#/components/schemas/LoginRequest"
           }
-        }
+        ]
+      },
+      "RegistrationResponse": {
+        "$ref": "#/components/schemas/LoginResponse"
       },
       "TokensRequest": {
         "type": "object",
@@ -1033,7 +1050,7 @@
           "refresh_token": {
             "type": "string",
             "description": "Access token",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDVlYjk5YTNlZDAxYjU0MjQxMmE1ZiIsImlhdCI6MTY5MjAxMDg4NywiZXhwIjoxNjk0NjAyODg3fQ.6y6K88bc38--1DYZN79FgvUyw4kMnFEhczicJymkguc"
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
           }
         }
       },
@@ -1145,58 +1162,6 @@
           }
         }
       },
-      "Login401error": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Email or password is incorrect"
-          },
-          "status": {
-            "type": "integer",
-            "example": 401
-          }
-        }
-      },
-      "Registration409error": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "This user is already exist"
-          },
-          "status": {
-            "type": "integer",
-            "example": 409
-          }
-        }
-      },
-      "Refresh403error": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Invalid token"
-          },
-          "status": {
-            "type": "integer",
-            "example": 403
-          }
-        }
-      },
-      "Auth401error": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Unauthorized"
-          },
-          "status": {
-            "type": "integer",
-            "example": 401
-          }
-        }
-      },
       "AllReviews": {
         "type": "array",
         "description": "An array containing all user reviews",
@@ -1246,15 +1211,6 @@
             }
           }
         ]
-      },
-      "Error409Response": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "The user already has everything, it is not possible to add anything additional"
-          }
-        }
       },
       "AddReviewRequest": {
         "type": "object",
@@ -1392,50 +1348,6 @@
           }
         }
       },
-      "Error400Response": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Bad request"
-          },
-          "status": {
-            "type": "integer",
-            "example": 400
-          }
-        }
-      },
-      "Error401Response": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Unauthorized"
-          }
-        }
-      },
-      "Error404Response": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Not Found"
-          }
-        }
-      },
-      "Error500Response": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Internal Server Error"
-          },
-          "status": {
-            "type": "integer",
-            "example": 500
-          }
-        }
-      },
       "AllTasksForMonthResponse": {
         "allOf": [
           {
@@ -1469,15 +1381,6 @@
             }
           }
         ]
-      },
-      "AllTasksError400Response": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Invalid date format"
-          }
-        }
       },
       "CreateTaskRequest": {
         "type": "object",
@@ -1538,6 +1441,106 @@
           "message": {
             "type": "string",
             "example": "Task deleted"
+          }
+        }
+      },
+      "Error400Response": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Validation error"
+          },
+          "status": {
+            "type": "integer",
+            "example": 400
+          }
+        }
+      },
+      "Error400AllTasksResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Invalid date format"
+          }
+        }
+      },
+      "Error401Response": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Unauthorized"
+          },
+          "status": {
+            "type": "integer",
+            "example": 401
+          }
+        }
+      },
+      "Error401LoginResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Email or password is incorrect"
+          },
+          "status": {
+            "type": "integer",
+            "example": 401
+          }
+        }
+      },
+      "Error403Response": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Invalid token"
+          },
+          "status": {
+            "type": "integer",
+            "example": 403
+          }
+        }
+      },
+      "Error404Response": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Not Found"
+          },
+          "status": {
+            "type": "integer",
+            "example": 404
+          }
+        }
+      },
+      "Error409Response": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "This user is already exist"
+          },
+          "status": {
+            "type": "integer",
+            "example": 409
+          }
+        }
+      },
+      "Error500Response": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Internal Server Error"
+          },
+          "status": {
+            "type": "integer",
+            "example": 500
           }
         }
       }
