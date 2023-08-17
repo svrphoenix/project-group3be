@@ -34,19 +34,20 @@ const updateReview = ctrlWrapper(async (req, res) => {
   const result = await Review.findOneAndUpdate({ owner }, req.body, {
     new: true,
   });
-  const response = result
-    ? { rating: result.rating, comment: result.comment }
-    : {};
-
-  res.status(200).json(response);
+  if (!result) {
+    throw new HttpError(404, 'Not found.🤷‍♀️');
+  }
+  const { rating, comment } = result;
+  res.status(200).json({ rating, comment });
 });
 
 const deleteReview = ctrlWrapper(async (req, res) => {
   const { _id: owner } = req.user;
   const result = await Review.findOneAndDelete({ owner });
-  const message = result ? 'Review deleted' : 'Review not found';
-
-  res.status(200).json({ message });
+  if (!result) {
+    throw new HttpError(404, 'Not found.🤦‍♀️');
+  }
+  res.status(200).json({ message: 'Review deleted' });
 });
 
 module.exports = {
