@@ -23,7 +23,7 @@ const uploadAvatar = async (req, res, next) => {
     const dataURI = 'data:' + req.file.mimetype + ';base64,' + b64;
     const cldRes = await handleUpload(dataURI);
 
-    req.body.avatarURL = cldRes.url;
+    req.body.avatarURL = cldRes.secure_url;
 
     next();
   } catch (error) {
