@@ -2,11 +2,10 @@ const { Schema, model } = require('mongoose');
 
 const {
   emailRegex,
-  // passwordRegex,
   phoneRegex,
   skypeRegex,
   birthdayRegex,
-} = require('../helpers/validation/const');
+} = require('../const');
 
 const todayDate = new Date().toISOString().slice(0, 10);
 

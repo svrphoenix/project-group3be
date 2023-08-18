@@ -1,7 +1,6 @@
 const express = require('express');
 
 const { validateBody, auth } = require('../middlewares');
-
 const {
   reviewsAddSchema,
   reviewsUpdateSchema,
@@ -13,10 +12,10 @@ const {
   updateReview,
   deleteReview,
 } = require('../controllers/reviewsController');
+
 const router = express.Router();
 
 router.route('/').get(getAllReviews);
-
 router
   .route('/own')
   .get(auth, getUserReview)

@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const { emailRegex, passwordRegex } = require('./const');
+const { emailRegex, passwordRegex } = require('../../const');
 
 const registerValidationSchema = Joi.object({
   name: Joi.string().min(3).max(20).required(),

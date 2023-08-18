@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { phoneRegex, skypeRegex, birthdayRegex } = require('./const');
+const { phoneRegex, skypeRegex, birthdayRegex } = require('../../const');
 const { registerValidationSchema } = require('./authValidationSchema');
 
 const updateUserSchema = Joi.object().keys({
@@ -11,4 +11,4 @@ const updateUserSchema = Joi.object().keys({
   avatarURL: Joi.string().allow(''),
 });
 
-module.exports = updateUserSchema;
+module.exports = { updateUserSchema };

@@ -208,7 +208,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "$ref": "#/components/schemas/CurrentUserResponse"
                 }
               }
             }
@@ -943,6 +943,45 @@
         }
       },
       "LoginResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CurrentUserResponse"
+          },
+          {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "token": {
+                "type": "string",
+                "description": "Access token",
+                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+              }
+            }
+          }
+        ]
+      },
+      "RegistrationRequest": {
+        "allOf": [
+          {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": "Joi"
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/LoginRequest"
+          }
+        ]
+      },
+      "RegistrationResponse": {
+        "$ref": "#/components/schemas/LoginResponse"
+      },
+      "CurrentUserResponse": {
         "type": "object",
         "properties": {
           "user": {
@@ -994,34 +1033,8 @@
                 "example": "38 (000) 123 45 67"
               }
             }
-          },
-          "token": {
-            "type": "string",
-            "description": "Access token",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
           }
         }
-      },
-      "RegistrationRequest": {
-        "allOf": [
-          {
-            "type": "object",
-            "required": ["name"],
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User's name",
-                "example": "Joi"
-              }
-            }
-          },
-          {
-            "$ref": "#/components/schemas/LoginRequest"
-          }
-        ]
-      },
-      "RegistrationResponse": {
-        "$ref": "#/components/schemas/LoginResponse"
       },
       "TokensRequest": {
         "type": "object",

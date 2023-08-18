@@ -40,7 +40,7 @@ const getCurrent = (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const id = req.user._id;
+  const { _id: id } = req.user;
 
   const userFromDB = await User.findById(id);
 
