@@ -1082,12 +1082,12 @@
           "phone": {
             "type": "string",
             "description": "User's phone number",
-            "example": "38 (000) 123 45 67"
+            "example": "+38 (000) 123 45 67"
           },
           "skype": {
             "type": "string",
             "description": "User's skype number",
-            "example": "38 (000) 123 45 67"
+            "example": "+44 (000) 123 45 67"
           },
           "birthday": {
             "type": "string",
@@ -1118,12 +1118,12 @@
           "phone": {
             "type": "string",
             "description": "User's phone number",
-            "example": "38 (000) 123 45 67"
+            "example": "+38 (000) 123 45 67"
           },
           "skype": {
             "type": "string",
             "description": "User's skype number",
-            "example": "38 (000) 123 45 67"
+            "example": "+44 (000) 123 45 67"
           },
           "birthday": {
             "type": "string",

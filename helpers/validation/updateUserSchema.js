@@ -8,7 +8,7 @@ const updateUserSchema = Joi.object().keys({
   phone: Joi.string().pattern(phoneRegex),
   skype: Joi.string().pattern(skypeRegex),
   birthday: Joi.string().pattern(birthdayRegex),
-  avatarURL: Joi.string(),
+  avatarURL: Joi.string().allow(''),
 });
 
 module.exports = updateUserSchema;

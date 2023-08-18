@@ -40,10 +40,18 @@ const getCurrent = (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { _id } = req.user;
-  const updatedUser = await User.findByIdAndUpdate(_id, req.body, {
+  const id = req.user._id;
+
+  const userFromDB = await User.findById(id);
+
+  if (req.body.avatarURL === '') {
+    req.body.avatarURL = userFromDB.avatarURL;
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(id, req.body, {
     new: true,
   });
+
   res.json(updatedUser);
 };
 

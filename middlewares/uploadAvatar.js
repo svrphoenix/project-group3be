@@ -19,6 +19,13 @@ function runMiddleware(req, res, fn) {
 const uploadAvatar = async (req, res, next) => {
   try {
     await runMiddleware(req, res, myUploadMiddleware);
+
+    if (!req.file) {
+      req.body.avatarURL = req.body.avatar;
+      delete req.body.avatar;
+      return next();
+    }
+
     const b64 = Buffer.from(req.file.buffer).toString('base64');
     const dataURI = 'data:' + req.file.mimetype + ';base64,' + b64;
     const cldRes = await handleUpload(dataURI);
