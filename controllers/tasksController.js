@@ -20,9 +20,6 @@ const getAll = async (req, res, next) => {
     return next(new HttpError(400, 'Invalid date format'));
   }
 
-  // const startOfMonth = new Date(year, month - 1, 2).toISOString();
-  // const endOfMonth = new Date(year, month, 1).toISOString();
-
   const parsedDate = parse(`${year}-${month}`, 'yyyy-MM', new Date());
 
   const lastDayOfMonth = new Date(
