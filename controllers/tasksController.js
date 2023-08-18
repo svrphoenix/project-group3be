@@ -1,3 +1,4 @@
+const { parse } = require('date-fns');
 const { Task } = require('../models/task');
 const HttpError = require('../helpers/HttpError');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
@@ -19,8 +20,21 @@ const getAll = async (req, res, next) => {
     return next(new HttpError(400, 'Invalid date format'));
   }
 
-  const startOfMonth = new Date(year, month - 1, 2).toISOString();
-  const endOfMonth = new Date(year, month, 1).toISOString();
+  const parsedDate = parse(`${year}-${month}`, 'yyyy-MM', new Date());
+
+  const lastDayOfMonth = new Date(
+    parsedDate.getFullYear(),
+    parsedDate.getMonth() + 1,
+    0
+  );
+
+  lastDayOfMonth.setHours(23, 59, 59, 999);
+
+  const startOfMonth = parsedDate.toISOString();
+  const endOfMonth = lastDayOfMonth.toISOString();
+
+  console.log('startOfMonth', startOfMonth);
+  console.log('endOfMonth', endOfMonth);
 
   const result = await Task.find(
     { owner, date: { $gte: startOfMonth, $lte: endOfMonth } },
@@ -43,8 +57,9 @@ const addTask = async (req, res, next) => {
 
 const updateTask = async (req, res, next) => {
   const { id } = req.params;
+  const { _id: owner } = req.user;
 
-  const result = await Task.findByIdAndUpdate(id, req.body, {
+  const result = await Task.findOneAndUpdate({ _id: id, owner }, req.body, {
     new: true,
   });
 
@@ -56,8 +71,9 @@ const updateTask = async (req, res, next) => {
 
 const removeTask = async (req, res, next) => {
   const { id } = req.params;
+  const { _id: owner } = req.user;
 
-  const result = await Task.findByIdAndRemove(id);
+  const result = await Task.findOneAndRemove({ _id: id, owner });
 
   if (!result) {
     return next(new HttpError(404));
