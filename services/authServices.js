@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const { REFRESH_TOKEN_SECRET } = process.env;
 
-const { User } = require('../models/user');
+const { User } = require('../models/User');
 const HttpError = require('../helpers/HttpError');
 const { createTokens } = require('../helpers/createTokens');
 
