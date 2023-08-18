@@ -1,14 +1,12 @@
 const express = require('express');
 
-const { auth } = require('../middlewares/auth');
-const validateBody = require('../middlewares/validateBody');
+const { auth, validateBody, uploadAvatar } = require('../middlewares');
 const {
   registerValidationSchema,
   refreshSchema,
   loginValidationSchema,
 } = require('../helpers/validation/authValidationSchema');
-
-const updateUserSchema = require('../helpers/validation/updateUserSchema');
+const { updateUserSchema } = require('../helpers/validation/updateUserSchema');
 
 const {
   register,
@@ -18,8 +16,6 @@ const {
   refresh,
   updateUser,
 } = require('../controllers/authControllers');
-
-const uploadAvatar = require('../middlewares/uploadAvatar');
 
 const router = express.Router();
 
@@ -37,4 +33,4 @@ router.patch(
   updateUser
 );
 
-module.exports = { authRouter: router };
+module.exports = router;

@@ -1,4 +1,4 @@
-const { Review } = require('../models/review');
+const { Review } = require('../models/Review');
 const HttpError = require('../helpers/HttpError');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 
@@ -38,7 +38,7 @@ const updateReview = async (req, res) => {
     new: true,
   });
   if (!result) {
-    throw new HttpError(404, 'Not found.🤷‍♀️');
+    throw new HttpError(404);
   }
   const { rating, comment } = result;
   res.status(200).json({ rating, comment });
@@ -48,7 +48,7 @@ const deleteReview = async (req, res) => {
   const { _id: owner } = req.user;
   const result = await Review.findOneAndDelete({ owner });
   if (!result) {
-    throw new HttpError(404, 'Not found.🤦‍♀️');
+    throw new HttpError(404);
   }
   res.status(200).json({ message: 'Review deleted' });
 };

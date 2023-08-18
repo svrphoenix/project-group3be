@@ -6,22 +6,22 @@ const {
   updateTask,
   removeTask,
 } = require('../controllers/tasksController');
-
 const {
   addSchema,
   updateSchema,
 } = require('../helpers/validation/tasksSchemas');
-
 const { validateBody, isValidId, auth } = require('../middlewares');
 
 const router = express.Router();
 
-router.get('/', auth, getAll);
+router
+  .route('/')
+  .get(auth, getAll)
+  .post(auth, validateBody(addSchema), addTask);
 
-router.post('/', auth, validateBody(addSchema), addTask);
-
-router.patch('/:id', auth, isValidId, validateBody(updateSchema), updateTask);
-
-router.delete('/:id', auth, isValidId, removeTask);
+router
+  .route('/:id')
+  .patch(auth, isValidId, validateBody(updateSchema), updateTask)
+  .delete(auth, isValidId, removeTask);
 
 module.exports = router;

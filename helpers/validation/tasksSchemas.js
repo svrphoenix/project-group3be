@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { timeRegexp, dateRegexp } = require('./const');
+const { timeRegexp, dateRegexp } = require('../../const');
 
 const addSchema = Joi.object({
   title: Joi.string().max(250).required().messages({

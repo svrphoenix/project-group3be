@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const mongooseErrorHandler = require('../helpers/mongooseErrorHandler');
-const { timeRegexp, dateRegexp } = require('../helpers/validation/const');
+const { timeRegexp, dateRegexp } = require('../const');
 
 const taskSchema = new Schema(
   {
