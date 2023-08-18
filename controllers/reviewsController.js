@@ -1,4 +1,4 @@
-const { Review } = require('../models/Review');
+const { Review } = require('../models/review');
 const HttpError = require('../helpers/HttpError');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 

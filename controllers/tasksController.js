@@ -1,5 +1,5 @@
 const { parse } = require('date-fns');
-const { Task } = require('../models/Task');
+const { Task } = require('../models/task');
 const HttpError = require('../helpers/HttpError');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 

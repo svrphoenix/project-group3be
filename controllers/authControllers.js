@@ -6,7 +6,7 @@ const {
   refreshService,
 } = require('../services/authServices');
 
-const { User } = require('../models/User');
+const { User } = require('../models/user');
 
 const register = async (req, res) => {
   await registerService(req.body);
