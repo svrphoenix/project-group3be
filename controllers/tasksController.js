@@ -19,7 +19,13 @@ const getAll = async (req, res, next) => {
     return next(new HttpError(400, 'Invalid date format'));
   }
 
-  const parsedDate = parse(`${year}-${month}`, 'yyyy-MM', new Date());
+  // const parsedDate = parse(`${year}-${month}`, 'yyyy-MM', new Date());
+
+  const resolvedTimeZone = req.header('Time-Zone');
+
+  const parsedDate = parse(`${year}-${month}`, 'yyyy-MM', {
+    timeZone: resolvedTimeZone,
+  });
 
   const lastDayOfMonth = new Date(
     parsedDate.getFullYear(),
