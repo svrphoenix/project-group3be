@@ -1163,8 +1163,11 @@
       "AllReviews": {
         "type": "array",
         "description": "An array containing all user reviews",
-        "required": ["comment", "rating"],
         "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Review's id in database (type ObjectId)"
+          },
           "comment": {
             "type": "string",
             "description": "User's comment about the product or service",
@@ -1180,6 +1183,11 @@
             "type": "object",
             "description": "Information about the user who left the review",
             "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User's id in database (type ObjectId)"
+              },
+
               "name": {
                 "type": "string",
                 "description": "User's name"
@@ -1193,17 +1201,21 @@
         },
         "example": [
           {
+            "_id": "64de98aacfa11ece42fbac7b",
             "rating": 5,
             "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
             "owner": {
+              "_id": "64de2a301502b642f7e35a50",
               "name": "Kateryna Hilcher",
               "avatarURL": "https://example.com/avatar.jpg"
             }
           },
           {
+            "_id": "64de98aacfa11ece42fbac7b",
             "rating": 4,
             "comment": "A good, visual time planning program.",
             "owner": {
+              "_id": "64de2a301502b642f7e35a50",
               "name": "Volodymyr Shvets",
               "avatarURL": "https://example.com/avatar.jpg"
             }
