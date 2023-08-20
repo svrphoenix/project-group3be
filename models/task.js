@@ -14,6 +14,12 @@ const taskSchema = new Schema(
       type: String,
       required: [true, 'Enter the task end time'],
       match: timeRegexp,
+      validate: {
+        validator: function (value) {
+          return value >= this.start;
+        },
+        message: 'End time must be greater than start time',
+      },
     },
     priority: {
       type: String,
@@ -38,14 +44,6 @@ const taskSchema = new Schema(
   },
   { versionKey: false, timestamps: true }
 );
-
-taskSchema.pre('save', async function (next) {
-  if (this.start > this.end) {
-    const error = new Error('End time must be greater than start time');
-    return next(error);
-  }
-  next();
-});
 
 taskSchema.post('save', mongooseErrorHandler);
 
