@@ -1347,7 +1347,7 @@
           },
           "date": {
             "type": "string",
-            "description": "Task`s completion date. Must be in yyyy.mm.dd format and start from 2023",
+            "description": "Task`s completion date. Must be in YYYY-MM-DD format and start from 2023",
             "example": "2023-09-01"
           },
           "category": {
