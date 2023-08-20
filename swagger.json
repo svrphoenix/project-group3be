@@ -1472,7 +1472,7 @@
         "properties": {
           "message": {
             "type": "string",
-            "example": "Invalid date format"
+            "example": "Invalid date format. 'Year' should be in YYYY format, 'month' should be in MM format"
           }
         }
       },

@@ -14,7 +14,12 @@ const getAll = async (req, res, next) => {
     parseInt(month) < 1 ||
     parseInt(month) > 12
   ) {
-    return next(new HttpError(400, 'Invalid date format'));
+    return next(
+      new HttpError(
+        400,
+        'Invalid date format. "Year" should be in YYYY format, "month" should be in MM format'
+      )
+    );
   }
 
   const result = await Task.find(
