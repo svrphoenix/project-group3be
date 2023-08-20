@@ -640,16 +640,6 @@
         "summary": "Get all tasks for a month for an authorized user",
         "parameters": [
           {
-            "name": "Time-Zone",
-            "in": "header",
-            "description": "Time zone of the client",
-            "schema": {
-              "type": "string",
-              "example": "Europe/Kiev"
-            },
-            "required": true
-          },
-          {
             "name": "month",
             "in": "query",
             "description": "Two digits of the month",
@@ -1482,7 +1472,7 @@
         "properties": {
           "message": {
             "type": "string",
-            "example": "Invalid date format"
+            "example": "Invalid date format. 'Year' should be in YYYY format, 'month' should be in MM format"
           }
         }
       },
