@@ -1,11 +1,9 @@
-const { parse } = require('date-fns');
 const { Task } = require('../models/task');
 const HttpError = require('../helpers/HttpError');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 
 const getAll = async (req, res, next) => {
   const { _id: owner } = req.user;
-
   const { month, year } = req.query;
 
   if (
@@ -19,30 +17,11 @@ const getAll = async (req, res, next) => {
     return next(new HttpError(400, 'Invalid date format'));
   }
 
-  // const parsedDate = parse(`${year}-${month}`, 'yyyy-MM', new Date());
-
-  const resolvedTimeZone = req.header('Time-Zone');
-
-  const parsedDate = parse(`${year}-${month}`, 'yyyy-MM', {
-    timeZone: resolvedTimeZone,
-  });
-
-  const lastDayOfMonth = new Date(
-    parsedDate.getFullYear(),
-    parsedDate.getMonth() + 1,
-    0
-  );
-
-  lastDayOfMonth.setHours(23, 59, 59, 999);
-
-  const startOfMonth = parsedDate.toISOString();
-  const endOfMonth = lastDayOfMonth.toISOString();
-
-  console.log('startOfMonth', startOfMonth);
-  console.log('endOfMonth', endOfMonth);
-
   const result = await Task.find(
-    { owner, date: { $gte: startOfMonth, $lte: endOfMonth } },
+    {
+      owner,
+      date: { $regex: `^${year}-${month}` },
+    },
     '-createdAt -updatedAt'
   ).populate('owner', 'avatarURL');
 
