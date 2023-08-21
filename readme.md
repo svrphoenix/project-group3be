@@ -1,21 +1,15 @@
 # GooseTrack project backend repository
 
-This project contains the backend for the
-[GooseTrack task planner application](https://svrphoenix.github.io/project-group3fe).
-It provides user registration, authentication, management of reviews, and user
+This project contains the backend part of the web application
+[GooseTrack Task Planner](https://svrphoenix.github.io/project-group3fe). It
+provides user registration, authentication, management of reviews, and user
 tasks.
 
-### Application Links
+### Installation and Usage
 
-- [GooseTrack Task Planner Frontend](https://github.com/svrphoenix/project-group3fe)
-- The backend part is deployed on the Render.com server and is accessible at:
-  [https://goose-backend.onrender.com/](https://goose-backend.onrender.com/).
-
-  ### Installation and Usage
-
-  Make sure you have the LTS version of [Node.js](https://nodejs.org/en) and
-  [npm](https://www.npmjs.com/) installed. To obtain and run this project
-  locally, follow these steps:
+Make sure you have the LTS version of [Node.js](https://nodejs.org/en) and
+[npm](https://www.npmjs.com/) installed. To obtain and run this project locally,
+follow these steps:
 
 1. **Clone the repository** Open your terminal and execute the command:
 
@@ -50,8 +44,19 @@ tasks.
 - `npm lint:fix` &mdash; run lint checking with automatic fixes for simple
   errors
 
-### Documentation
+### Backend Deployment
+
+The backend component has been deployed on the Render.com server and is
+accessible at:
+[https://goose-backend.onrender.com/](https://goose-backend.onrender.com/).
+
+### API Documentation
 
 For working with the project, documentation of endpoints has been created using
 Swagger UI. You can find it at this
-[link](https://goose-backend.onrender.com/docs/).
+[GooseTrack API Documentation](https://goose-backend.onrender.com/docs/)
+
+### Backend Repository
+
+Check out the frontend code at:
+[GooseTrack Frontend Repository](https://github.com/svrphoenix/project-group3fe)
