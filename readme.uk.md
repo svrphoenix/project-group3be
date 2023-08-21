@@ -1,23 +1,15 @@
 # GooseTrack project backend repository
 
-Цей проєкт містить backend для додатку
+Цей проєкт містить backend частину веб-застосунку
 [планувальника завдань GooseTrack](https://svrphoenix.github.io/project-group3fe).
 Він забезпечує реєстрацію, авторизацію, управління відгуками та завданнями
 користувачів.
 
-### Посилання додатку
+### Розгортання та налаштування
 
-- [Frontend частина](https://github.com/svrphoenix/project-group3fe)
-  планувальника завдань GooseTrack.
-- Backend частина розгорнута на сервері Render.com та доступна за посиланням:
-  [https://goose-backend.onrender.com/](https://goose-backend.onrender.com/).
-
-  ### Розгортання та налаштування
-
-  Переконайтеся, що у вас встановлені LTS версія
-  [Node.js](npm.https://nodejs.org/uk) та [npm](https://www.npmjs.com/). Для
-  того, щоб отримати та запустити цей проєкт локально, дотримуйтесь наступних
-  кроків:
+Переконайтеся, що у вас встановлені LTS версія
+[Node.js](npm.https://nodejs.org/uk) та [npm](https://www.npmjs.com/). Для того,
+щоб отримати та запустити цей проєкт локально, дотримуйтесь наступних кроків:
 
 1. **Клонуйте репозиторій** Відкрийте термінал та виконайте команду:
 
@@ -53,8 +45,18 @@
 - `npm lint:fix` &mdash; запуск тої ж перевірки лінтера, але з автоматичними
   виправленнями простих помилок
 
-### Документація
+### Розгортання backend частини додатку
+
+Backend частина розгорнута на сервері Render.com та доступна за посиланням:
+[https://goose-backend.onrender.com/](https://goose-backend.onrender.com/).
+
+### Документація API
 
 Для роботи з проєктом створено документацію ендпоінтів з використанням Swagger
 UI. Ви можете знайти її за цим
 [посиланням](https://goose-backend.onrender.com/docs/).
+
+### Репозиторій frontend частини
+
+Перевірити код frontend частини застосунку можна у:
+[frontend репозиторії GooseTrack](https://github.com/svrphoenix/project-group3fe).
