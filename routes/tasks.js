@@ -14,14 +14,12 @@ const { validateBody, isValidId, auth } = require('../middlewares');
 
 const router = express.Router();
 
-router
-  .route('/')
-  .get(auth, getAll)
-  .post(auth, validateBody(addSchema), addTask);
+router.route('/').all(auth).get(getAll).post(validateBody(addSchema), addTask);
 
 router
   .route('/:id')
-  .patch(auth, isValidId, validateBody(updateSchema), updateTask)
-  .delete(auth, isValidId, removeTask);
+  .all(auth)
+  .patch(isValidId, validateBody(updateSchema), updateTask)
+  .delete(isValidId, removeTask);
 
 module.exports = router;

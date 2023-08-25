@@ -18,9 +18,10 @@ const router = express.Router();
 router.route('/').get(getAllReviews);
 router
   .route('/own')
-  .get(auth, getUserReview)
-  .post(auth, validateBody(reviewsAddSchema), addReview)
-  .patch(auth, validateBody(reviewsUpdateSchema), updateReview)
-  .delete(auth, deleteReview);
+  .all(auth)
+  .get(getUserReview)
+  .post(validateBody(reviewsAddSchema), addReview)
+  .patch(validateBody(reviewsUpdateSchema), updateReview)
+  .delete(deleteReview);
 
 module.exports = router;
